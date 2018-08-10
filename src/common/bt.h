@@ -1,8 +1,6 @@
 /*
  * bt.h
  *
- *  Created on: Aug 3, 2018
- *      Author: jdave12
  */
 
 #ifndef BT_H_

@@ -46,6 +46,7 @@ int findMinDepth(const tnPtr& root) {
 
 
 
+/*
 int main() {
 	const std::vector<tnPtr> roots {
 		createBT0(),
@@ -65,4 +66,5 @@ int main() {
 	}
 
 }
+*/
 
