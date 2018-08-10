@@ -4,8 +4,14 @@
 
 #include "bt.h"
 
-// 5.4.1 Minimum depth of binary tree
-// O(N) time, O(2^depth) space, uses BFS
+/*
+ 5.4.1 Minimum depth of binary tree
+ O(N) time, O(2^depth) space, uses BFS
+ BFS is preferred since we wish to find the shortest path to a leaf node
+ DFS could traverse longer depths first
+ BFS may not be appropriate for wide trees, but here we have a BT
+ so that's not an issue
+*/
 int findMinDepth(const tnPtr& root) {
 	if(!root) {
 		return -1;
