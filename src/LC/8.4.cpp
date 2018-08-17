@@ -9,7 +9,9 @@
 #include <unordered_map>
 
 #include "print.h"
+#include "print.cpp"
 #include "misc.h"
+#include "misc.cpp"
 
 void getUniquePermsHelper(std::vector<std::vector<int>>& res, std::vector<int>& cur,
 	std::unordered_map<int, int>& freqTable, const size_t n) {
@@ -36,13 +38,16 @@ void getUniquePermsHelper(std::vector<std::vector<int>>& res, std::vector<int>& 
 }
 
 void getUniquePerms(const std::vector<int>& v) {
+
 	auto freqTable = createFreqTableFromVector<int>(v);
 	std::vector<std::vector<int>> res;
 	std::vector<int> cur;
 
 	getUniquePermsHelper(res, cur, freqTable, v.size());
 	printVectorOfVectors<int>(res);
+
 }
+/*
 
 int main() {
 
@@ -56,4 +61,5 @@ int main() {
 	};
 	std::for_each(v.begin(), v.end(), getUniquePerms);
 }
+*/
 
