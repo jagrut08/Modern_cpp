@@ -1,0 +1,42 @@
+Bookmarks: 5.4.2, 8.5
+--
+could not figure out opt algo if any
+--
+int findMaxDepth(const tnPtr& root)
+--
+nullptr
+1 node
+2 nodes
+3 nodes
+
+skewed - unbalanced
+extemely deep
+multiple paths at highest depth
+--
+Algo
+depth=0 maxDepth = 0
+Traverse tree using DFS (preorder - root, left, right)
+	update depth for each level of depth
+	when leaf node is reached, update maxDepth to depth if depth > maxDepth
+
+O(N) time, O(N) space due to N levels of recursion
+--
+Optimized Algo
+Ignore branches that terminate earlier than other branches.. how? 
+--
+Code
+
+your algo above
+
+GFG implementation
+
+compare for a deep tree.. is there a diff?
+--
+
+
+
+
+
+
+
+
