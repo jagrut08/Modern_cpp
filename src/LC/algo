@@ -33,6 +33,12 @@ GFG implementation
 compare for a deep tree.. is there a diff?
 --
 
+createBT algo - better way to do it? 
+
+In case of certain exceptions, std::cout << variableOfInterest << '\n'; stdout stream is not flushed. Use endl.
+
+expressions like v[idx++] will become buggy in case you need to change code/logic. do ++idx as a separate statement. 
+
 
 
 

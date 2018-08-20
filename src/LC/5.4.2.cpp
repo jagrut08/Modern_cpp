@@ -30,6 +30,7 @@ int findMaxDepth(const tnPtr& root) {
 	return maxDepth;
 }
 
+/*
 int main() {
 	const std::vector<tnPtr> roots {
 		createBT0(),
@@ -49,4 +50,4 @@ int main() {
 	}
 
 }
-
+*/
