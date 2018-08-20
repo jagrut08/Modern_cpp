@@ -11,6 +11,7 @@
 #include <memory>
 #include <vector>
 #include <list>
+#include <new> // std::bad_alloc
 
 template <typename T>
 struct TreeNode {
@@ -53,53 +54,52 @@ tnPtr<T> createBT(const std::vector<T>& v, const T& nullVal) {
 		return nullptr;
 	}
 	std::vector<tnPtr<T>> ptrs(v.size(), nullptr);
+
 	try{
 		ptrs[0] = std::make_shared<TreeNode<T>>(v[0]);
 		tnPtr<T> parent;
-		std::ostringstream ostr;
 		for(size_t childIdx = 1, parentIdx = 0; childIdx < v.size(); ++parentIdx) {
 
-			ostr << "Parent: " << (ptrs[parentIdx]->val ? ptrs[parentIdx]->val : "nullptr") << " left: ";
+			parent = ptrs[parentIdx];
 
 			if(v[childIdx] != nullVal) {
 				ptrs[childIdx] = std::make_shared<TreeNode<T>>(v[childIdx]);
-				if(ptrs[parentIdx]) {
-					ptrs[parentIdx]->left = ptrs[childIdx];
-					ostr << ptrs[childIdx]->val;
+				if(parent) {
+					parent->left = ptrs[childIdx];
 				} else {
 					throw std::invalid_argument( "Parent is null, but left child is not! Check the input vector.");
 				}
 
-			} else { // left child is null
-				ostr << "nullptr";
 			}
-
-			ostr << " right: ";
 
 			++childIdx;
 			if(childIdx < v.size()) {
 				if(v[childIdx] != nullVal) {
 					ptrs[childIdx] = std::make_shared<TreeNode<T>>(v[childIdx]);
-					if(ptrs[parentIdx]) {
-						ptrs[parentIdx]->right = ptrs[childIdx];
-						ostr << ptrs[childIdx]->val;
+					if(parent) {
+						parent->right = ptrs[childIdx];
 					} else {
 						throw std::invalid_argument( "Parent is null, but right child is not! Check the input vector.");
 					}
-				} else {
-					ostr << "nullptr";
 				}
 				++childIdx;
 			}
 
-			ostr << '\n';
+			// Debugging
+			/*
+			if(parent) {
+				std::cout << "\nParent: " << std::to_string(parent->val)
+					<< " left: " << (parent->left ? std::to_string(parent->left->val) : "nullptr")
+					<< " right: " << (parent->right ? std::to_string(parent->right->val) : "nullptr") << '\n';
+			}
+			*/
+
 		}
 	} catch(const std::bad_alloc & e) {
-		std::cout << e.what() << '\n';
+		std::cerr << e.what() << '\n';
 		return nullptr;
 	}
 
-	std::cout << ostr.str();
 	return ptrs[0];
 }
 
