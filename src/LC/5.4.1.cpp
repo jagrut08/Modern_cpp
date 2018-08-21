@@ -59,7 +59,7 @@ int main() {
 		{'a', '\0', 'b', '\0', '\0', 'c'},
 		{'a', '\0', 'b', '\0', '\0', 'c', 'd', '\0', '\0', '\0', '\0', '\0', 'e'}
 	};
-	const std::vector<int> ans {
+	const std::vector<int> minDepths {
 		-1,
 		0,
 		1,
@@ -74,7 +74,7 @@ int main() {
 		const auto root = createBT(levelOrderTrees[i], nullVal);
 		printBT(root);
 		const int minDepth = findMinDepth(root);
-		assert(minDepth == ans[i]);
+		assert(minDepth == minDepths[i]);
 		std::cout << "Min depth: " << minDepth << '\n' << '\n';
 	}
 }

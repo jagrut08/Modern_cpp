@@ -11,7 +11,8 @@
 
 #include "bt.h"
 
-void findMaxDepthHelper(int& maxDepth, const int depth, const tnPtr& root) {
+template <typename T>
+void findMaxDepthHelper(int& maxDepth, const int depth, const tnPtr<T>& root) {
 	if(!root->left && !root->right) {
 		maxDepth = std::max(maxDepth, depth);
 	} else if(root->left) {
@@ -21,7 +22,8 @@ void findMaxDepthHelper(int& maxDepth, const int depth, const tnPtr& root) {
 	}
 }
 
-int findMaxDepth(const tnPtr& root) {
+template <typename T>
+int findMaxDepth(const tnPtr<T>& root) {
 	if(!root) {
 		return -1;
 	}
