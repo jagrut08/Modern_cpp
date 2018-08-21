@@ -1,8 +1,9 @@
+#include <bt.h>
 #include <iostream>
 #include <vector>
 #include <list>
+#include <cassert>
 
-#include "bt.h"
 
 /*
  5.4.1 Minimum depth of binary tree
@@ -12,16 +13,17 @@
  BFS may not be appropriate for wide trees, but here we have a BT
  so that's not an issue
 */
-int findMinDepth(const tnPtr& root) {
+template <typename T>
+int findMinDepth(const tnPtr<T>& root) {
 	if(!root) {
 		return -1;
 	}
 
-	std::list<tnPtr> queue{root};
+	std::list<tnPtr<T>> queue{root};
 	int depth = 0;
 
 	while(!queue.empty()) {
-		std::list<tnPtr> tmpQueue;
+		std::list<tnPtr<T>> tmpQueue;
 		for(const auto& ptr : queue) {
 			if(!ptr->left && !ptr->right) {
 				return depth;
@@ -44,27 +46,37 @@ int findMinDepth(const tnPtr& root) {
 	return depth;
 }
 
-
-
-/*
 int main() {
-	const std::vector<tnPtr> roots {
-		createBT0(),
-		createBT1(),
-		createBT2(),
-		createBT3(),
-		createBT4(),
-		createBT5(),
-		createBT3LeftSkew(),
-		createBT3RightSkew(),
-		createBT5_1()
+	const char nullVal = '\0';
+	const std::vector<std::vector<char>> levelOrderTrees {
+		{},
+		{'a'},
+		{'a', 'b'},
+		{'a', 'b', 'c'},
+		{'a', 'b', 'c', '\0', '\0', 'd'},
+		{'a', 'b', 'c', 'd', '\0', 'e', '\0'},
+		{'a', 'b', '\0', 'c'},
+		{'a', '\0', 'b', '\0', '\0', 'c'},
+		{'a', '\0', 'b', '\0', '\0', 'c', 'd', '\0', '\0', '\0', '\0', '\0', 'e'}
 	};
-
-	for(const auto& root : roots) {
+	const std::vector<int> ans {
+		-1,
+		0,
+		1,
+		1,
+		1,
+		2,
+		2,
+		2,
+		2
+	};
+	for(size_t i = 0; i < levelOrderTrees.size(); ++i) {
+		const auto root = createBT(levelOrderTrees[i], nullVal);
 		printBT(root);
-		std::cout << "Min Depth: " << findMinDepth(root) << '\n' << '\n';
+		const int minDepth = findMinDepth(root);
+		assert(minDepth == ans[i]);
+		std::cout << "Min depth: " << minDepth << '\n' << '\n';
 	}
-
 }
-*/
+
 
