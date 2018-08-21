@@ -1,9 +1,11 @@
-#include <bt.h>
+
 #include <iostream>
 #include <vector>
 #include <list>
 #include <cassert>
+#include <boost/range/combine.hpp>
 
+#include "bt.h"
 
 /*
  5.4.1 Minimum depth of binary tree
@@ -48,7 +50,7 @@ int findMinDepth(const tnPtr<T>& root) {
 
 int main() {
 	const char nullVal = '\0';
-	const std::vector<std::vector<char>> levelOrderTrees {
+	std::vector<std::vector<char>> levelOrderTrees {
 		{},
 		{'a'},
 		{'a', 'b'},
@@ -59,7 +61,7 @@ int main() {
 		{'a', '\0', 'b', '\0', '\0', 'c'},
 		{'a', '\0', 'b', '\0', '\0', 'c', 'd', '\0', '\0', '\0', '\0', '\0', 'e'}
 	};
-	const std::vector<int> minDepths {
+	std::vector<int> minDepths {
 		-1,
 		0,
 		1,
@@ -70,12 +72,31 @@ int main() {
 		2,
 		2
 	};
+
+	/*
 	for(size_t i = 0; i < levelOrderTrees.size(); ++i) {
 		const auto root = createBT(levelOrderTrees[i], nullVal);
 		printBT(root);
 		const int minDepth = findMinDepth(root);
 		assert(minDepth == minDepths[i]);
 		std::cout << "Min depth: " << minDepth << '\n' << '\n';
+	}
+*/
+	// Using boost::combine
+
+	for(auto tup : boost::combine(levelOrderTrees, minDepths)) {
+		std::vector<char> levelOrder{};
+		int expectedMinDepth = -1;
+		boost::tie(levelOrder, expectedMinDepth) = tup;
+
+
+		const auto root = createBT(levelOrder, nullVal);
+		printBT(root);
+		const int minDepth = findMinDepth(root);
+		assert(minDepth == expectedMinDepth);
+		std::cout << "Min depth: " << minDepth << '\n' << '\n';
+
+
 	}
 }
 
