@@ -48,6 +48,7 @@ int findMinDepth(const tnPtr<T>& root) {
 	return depth;
 }
 
+/*
 int main() {
 	const char nullVal = '\0';
 	std::vector<std::vector<char>> levelOrderTrees {
@@ -73,7 +74,7 @@ int main() {
 		2
 	};
 
-	/*
+
 	for(size_t i = 0; i < levelOrderTrees.size(); ++i) {
 		const auto root = createBT(levelOrderTrees[i], nullVal);
 		printBT(root);
@@ -81,7 +82,7 @@ int main() {
 		assert(minDepth == minDepths[i]);
 		std::cout << "Min depth: " << minDepth << '\n' << '\n';
 	}
-*/
+
 	// Using boost::combine
 
 	for(auto tup : boost::combine(levelOrderTrees, minDepths)) {
@@ -95,9 +96,8 @@ int main() {
 		const int minDepth = findMinDepth(root);
 		assert(minDepth == expectedMinDepth);
 		std::cout << "Min depth: " << minDepth << '\n' << '\n';
-
-
 	}
 }
 
 
+*/
