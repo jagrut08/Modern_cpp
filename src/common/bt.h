@@ -19,10 +19,7 @@ struct TreeNode {
 	T val;
 	std::shared_ptr<TreeNode<T>> left, right;
 
-	TreeNode(const T v) : val(v) {
-		// Debugging
-//		std::cout << "Creating TreeNode with value " << std::to_string(v) << '\n';
-	}
+	TreeNode(const T v) : val(v) {}
 	TreeNode(const TreeNode& n): val(n.val), left(n.left), right(n.right) {}
 
 	const TreeNode& operator =(const TreeNode& n) {
@@ -65,7 +62,8 @@ E.g., {1, 2, 3}, {1} => BT with 1 at the root, 2 as left node, 3 as right node
  * https://www.geeksforgeeks.org/construct-complete-binary-tree-given-array/
  * has another implementation of creating a Binary Tree - given a TreeNode at index i, the left child is at index 2*i + 1 and the right
  * child is at index 2*i + 2, and you could recurse left and right. However, if you try to implement that iteratively, you'd still need
- * to maintain an array of pointers to TreeNodes that were created previously by the loop.
+ * to maintain an array of pointers to TreeNodes that were created previously by the loop. The recursive approach allocates O(N) stack
+ * space, while the iterative approach allocates a vector up-front, and is also O(N)
  *
  */
 template <typename T>
@@ -108,15 +106,6 @@ tnPtr<T> createBT(const std::vector<T>& v, const T& nullVal) {
 				}
 				++childIdx;
 			}
-
-			// Debugging
-			/*
-			if(parent) {
-				std::cout << "\nParent: " << std::to_string(parent->val)
-					<< " left: " << (parent->left ? std::to_string(parent->left->val) : "nullptr")
-					<< " right: " << (parent->right ? std::to_string(parent->right->val) : "nullptr") << '\n';
-			}
-			*/
 		}
 	} catch(const std::bad_alloc& e) {
 		std::cerr << e.what() << '\n';
@@ -142,21 +131,11 @@ void printBT(const tnPtr<T>& root) {
 			for(const auto& ptr : queue) {
 				std::cout << ptr->val << " ";
 
-				// Debugging
-			/*
-				std::cout << "Parent: " << std::to_string(ptr->val)
-				<< " left: " << (ptr->left? std::to_string(ptr->left->val) : "Null")
-				<< " right: " << (ptr->right? std::to_string(ptr->right->val) : "Null")
-				<< '\n';
-			 */
-
 				if(ptr->left) {
 					tmpQueue.emplace_back(ptr->left);
-			//		std::cout << "Enqueueing " << ptr->left->val << std::endl;
 				}
 				if(ptr->right) {
 					tmpQueue.emplace_back(ptr->right);
-			//		std::cout << "Enqueueing " << ptr->right->val << std::endl;
 				}
 			}
 			// Below won't work if queue and tmpQueue contain const tnPtr

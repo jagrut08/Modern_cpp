@@ -42,10 +42,10 @@ int maxDepth(TreeNode *root)
 template <typename T>
 int findMaxDepth(const tnPtr<T>& root) {
 	if(!root) {
-		return -1;
+		return 0;
 	}
-	int maxDepth = 0;
-	findMaxDepthHelper(maxDepth, 0, root);
+	int maxDepth = 1;
+	findMaxDepthHelper(maxDepth, 1, root);
 	return maxDepth;
 }
 
@@ -64,15 +64,15 @@ int main() {
 
 	};
 	std::vector<int> maxDepths {
-		-1,
 		0,
 		1,
-		1,
 		2,
 		2,
-		2,
-		2,
-		3
+		3,
+		3,
+		3,
+		3,
+		4
 	};
 
 	// Using boost::combine and BOOST_FOREACH
