@@ -64,6 +64,44 @@ loop over vector of vectors in reverse. // There would be N vectors worst case, 
 
 print res in reverse, each string delimited by \n
 --
-Time O(N) for collecting nodes. O(N)
+Time O(N) for collecting N nodes using breadth first traversal.
+Size of res vector = depth = d
+Amount of work done for each string within res = Size of each string in res = 2*2^(d-1) - 1.
+Total = O(N + (d * 2*2^(d-1) - 1))
+ 
+Space: 
+O(d) strings, each string is 2 * (2^d) - 1 
+Total = O(d + 2 * (2^d) - 1)
+--
+#include <iostream>
+#include <vector>
+
+
+template <typename T>
+void prettyPrintBT(const tnPtr<T>& root) {
+	if(!root) {
+		std::cout << "{}\n";
+	}
+	
+	std::vector<std::vector<tnPtr<T>>> allNodes;
+	std::vector<tnPtr<T>> curNodes {root};
+	
+	while(!curNodes.empty()) {
+			std::vector<tnPtr<T>> nextNodes;
+			for(const auto& ptr : curNodes) {
+				if(ptr->left) {
+					nextNodes.emplace_back(ptr->left);
+				}
+				
+				if(ptr->right) {
+					nextNodes.emplace_back(ptr->right);
+				}
+			}
+		
+			curNodes = nextNodes;
+	}
+
+}
+
 
 
