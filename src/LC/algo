@@ -56,8 +56,8 @@ gap = 1
 
 loop over vector of vectors in reverse. // There would be N vectors worst case, for an unbalanced tree.
 	create a string of size 2*x - 1 say str, initialized with spaces
-	starting at character after offset characters, say offset i
-		add each character of vector to str[i], spaces = gap. No spaces after last character
+	starting at character i, after offset characters from the left
+		add each character of vector to str[i], and spaces = gap after each character. No spaces after last character
 	gap = gap * 2 + 1
 	offset = offset * 2 + 1
 	add string to res
@@ -71,37 +71,5 @@ Total = O(N + (d * 2*2^(d-1) - 1))
  
 Space: 
 O(d) strings, each string is 2 * (2^d) - 1 
-Total = O(d + 2 * (2^d) - 1)
+Total = O(d * 2 * (2^d) - 1) + space for Breadth First traversal (O(N))
 --
-#include <iostream>
-#include <vector>
-
-
-template <typename T>
-void prettyPrintBT(const tnPtr<T>& root) {
-	if(!root) {
-		std::cout << "{}\n";
-	}
-	
-	std::vector<std::vector<tnPtr<T>>> allNodes;
-	std::vector<tnPtr<T>> curNodes {root};
-	
-	while(!curNodes.empty()) {
-			std::vector<tnPtr<T>> nextNodes;
-			for(const auto& ptr : curNodes) {
-				if(ptr->left) {
-					nextNodes.emplace_back(ptr->left);
-				}
-				
-				if(ptr->right) {
-					nextNodes.emplace_back(ptr->right);
-				}
-			}
-		
-			curNodes = nextNodes;
-	}
-
-}
-
-
-

@@ -48,7 +48,7 @@ int findMaxDepth(const tnPtr<T>& root) {
 	findMaxDepthHelper(maxDepth, 1, root);
 	return maxDepth;
 }
-
+/*
 int main() {
 	const char nullVal = '\0';
 	std::vector<std::vector<char>> levelOrderTrees {
@@ -87,4 +87,4 @@ int main() {
 		std::cout << "Max depth: " << maxDepth << '\n' << '\n';
 	}
 }
-
+*/

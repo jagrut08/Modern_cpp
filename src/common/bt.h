@@ -14,6 +14,8 @@
 #include <string>
 #include <exception>
 
+#include "print.h"
+
 template <typename T>
 struct TreeNode {
 	T val;
@@ -145,6 +147,37 @@ void printBT(const tnPtr<T>& root) {
 	} catch(const std::exception& e) {
 		std::cerr << e.what() << '\n';
 	}
+}
+/*
+ * Pretty print. Initially, will work for complete BTs only
+ */
+template <typename T>
+void prettyPrintBT(const tnPtr<T>& root) {
+	if(!root) {
+		std::cout << "{}\n";
+	}
+
+	std::vector<std::vector<tnPtr<T>>> allNodes;
+	allNodes.emplace_back(std::vector<tnPtr<T>>{root});
+
+	std::vector<tnPtr<T>> curNodes {root};
+
+	while(!curNodes.empty()) {
+			std::vector<tnPtr<T>> nextNodes;
+			for(const auto& ptr : curNodes) {
+				if(ptr->left) {
+					nextNodes.emplace_back(ptr->left);
+				}
+
+				if(ptr->right) {
+					nextNodes.emplace_back(ptr->right);
+				}
+			}
+			allNodes.emplace_back(nextNodes);
+			curNodes = nextNodes;
+	}
+
+	printVectorOfVectors(allNodes);
 }
 
 #endif /* SRC_COMMON_BT_H_ */
