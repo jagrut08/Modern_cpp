@@ -13,6 +13,7 @@
 #include <new> // std::bad_alloc
 #include <string>
 #include <exception>
+#include <cmath> // std::pow
 
 #include "print.h"
 
@@ -149,20 +150,29 @@ void printBT(const tnPtr<T>& root) {
 	}
 }
 /*
- * Pretty print. Initially, will work for complete BTs only
+ * Pretty print.
+ * Time O(N) for collecting N nodes using breadth first traversal.
+ * Size of res vector = depth = d
+ * Amount of work done for each string within res = Size of each string in res = 2*2^(d-1) - 1.
+ * Total = O(N + (d * 2*2^(d-1) - 1))
+ *
+ * Space:
+ * O(d) strings, each string is 2 * (2^d) - 1
+ * Total = O(d * 2 * (2^d) - 1) + space for Breadth First traversal (O(N))
+ *
  */
 template <typename T>
 void prettyPrintBT(const tnPtr<T>& root) {
 	if(!root) {
 		std::cout << "{}\n";
+		return;
 	}
 
-	std::vector<std::vector<tnPtr<T>>> allNodes;
-	allNodes.emplace_back(std::vector<tnPtr<T>>{root});
-
 	std::vector<tnPtr<T>> curNodes {root};
+	std::vector<std::vector<tnPtr<T>>> allNodes;
 
 	while(!curNodes.empty()) {
+			allNodes.emplace_back(curNodes);
 			std::vector<tnPtr<T>> nextNodes;
 			for(const auto& ptr : curNodes) {
 				if(ptr->left) {
@@ -173,11 +183,39 @@ void prettyPrintBT(const tnPtr<T>& root) {
 					nextNodes.emplace_back(ptr->right);
 				}
 			}
-			allNodes.emplace_back(nextNodes);
 			curNodes = nextNodes;
 	}
 
-	printVectorOfVectors(allNodes);
+	int depth = std::pow(2, allNodes.size() - 1);
+	int width = 2 * depth - 1;
+	int offset = 0, gap = 1;
+	//std::cout << depth << ", " << width << std::endl;
+	std::vector<std::string> res;
+
+//	printVectorOfVectors(allNodes);
+//	for(int i = allNodes.size() - 1; i >= 0; --i) {
+	for(auto& revIter = crbegin(allNodes); revIter != crend(allNodes); ++revIter) {
+		std::string row(width, ' ');
+		int rowIdx = offset;
+		const auto& nodes = *revIter;
+		for(auto& iter = cbegin(nodes); iter != cend(nodes) && rowIdx < row.size(); ++iter) {
+			const auto& nodePtr = *iter;
+			std::cout << "Processing " << nodePtr ->val << '\n';
+			std::cout << "rowIdx before " << rowIdx << '\n';
+			row[rowIdx] = nodePtr ->val;
+			rowIdx += gap + 1;
+			std::cout << "rowIdx after " << rowIdx << '\n';
+
+		}
+		res.emplace_back(row);
+		gap = 2*gap + 1;
+		offset = 2*offset + 1;
+	}
+
+	for(auto& revIter = crbegin(res); revIter != crend(res); ++revIter) {
+		std::cout << *revIter << '\n';
+	}
+	std::cout << '\n';
 }
 
 #endif /* SRC_COMMON_BT_H_ */

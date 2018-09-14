@@ -9,9 +9,7 @@
 #include <unordered_map>
 
 #include "print.h"
-#include "print.cpp"
 #include "misc.h"
-#include "misc.cpp"
 
 void getUniquePermsHelper(std::vector<std::vector<int>>& res, std::vector<int>& cur,
 	std::unordered_map<int, int>& freqTable, const size_t n) {

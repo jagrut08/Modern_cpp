@@ -1,75 +1,12 @@
 5.4.2, 8.5
 --
 pretty print BT algo/impl
---
-void prettyPrintBT(const tnPtr& root)
+better algo?
 --
 special cases
 
 left skew
 right skew
-deep
 
-
-0
-1
-2
-3
-..
-
-	'a'
-'b'		'c'
-
-
-			'a'
-	'b'				'c'
-'d'		'e'		'f'		'g'
-
-	***a***
-	*b***c*      
-	d*e*f*g // 3. Nodes = 2^N. Spaces = 2^N - 1 
-   
-
-	
-*a*
-b*c
-
-*******a*******
-***b*******c***
-*d***e***f***g*
-h*i*j*k*l*m*n*o
- 					   gap = 0  offset = 7
-  					   gap = 7 offset = 3 	
- 1   5	 9	  13	   gap = 3 offset = 1
-0 2 4 6 8 10 12 14     gap = 1 offset = 0
-
-
-algo
 --
-Iterate in a breadth first manner, collecting all nodes in a vector of vectors
-
-size of top level vector gives depth
-res is vector of strings
-nodes at leaf level  = 2 ^ (depth - 1) = x. Spaces = x - 1. Total size = 2*x - 1.
-offset = 0
-gap = 1
-
-loop over vector of vectors in reverse. // There would be N vectors worst case, for an unbalanced tree.
-	create a string of size 2*x - 1 say str, initialized with spaces
-	starting at character i, after offset characters from the left
-		add each character of vector to str[i], and spaces = gap after each character. No spaces after last character
-	gap = gap * 2 + 1
-	offset = offset * 2 + 1
-	add string to res
-
-print res in reverse, each string delimited by \n
---
-Time O(N) for collecting N nodes using breadth first traversal.
-Size of res vector = depth = d
-Amount of work done for each string within res = Size of each string in res = 2*2^(d-1) - 1.
-Total = O(N + (d * 2*2^(d-1) - 1))
- 
-Space: 
-O(d) strings, each string is 2 * (2^d) - 1 
-Total = O(d * 2 * (2^d) - 1) + space for Breadth First traversal (O(N))
 --
