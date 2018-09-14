@@ -174,46 +174,53 @@ void prettyPrintBT(const tnPtr<T>& root) {
 	while(!curNodes.empty()) {
 			allNodes.emplace_back(curNodes);
 			std::vector<tnPtr<T>> nextNodes;
+			bool atLeastOneChildAtNextLevel = false;
 			for(const auto& ptr : curNodes) {
-				if(ptr->left) {
+				if(ptr) {
+					// Add left and right nodes to nextNodes, irrespective of
+					// whether they are nullptrs
 					nextNodes.emplace_back(ptr->left);
-				}
-
-				if(ptr->right) {
 					nextNodes.emplace_back(ptr->right);
+					atLeastOneChildAtNextLevel = (ptr->left || ptr->right);
+				} else {
+					// Otherwise, add nullptrs for left and right children
+					nextNodes.emplace_back(nullptr);
+					nextNodes.emplace_back(nullptr);
 				}
 			}
-			curNodes = nextNodes;
+			// Continue only if there is a child at the next level
+			if(atLeastOneChildAtNextLevel) {
+				curNodes = nextNodes;
+			} else {
+				break;
+			}
 	}
+	// Print nodes thus accumulated in allNodes
 
 	int depth = std::pow(2, allNodes.size() - 1);
 	int width = 2 * depth - 1;
 	int offset = 0, gap = 1;
-	//std::cout << depth << ", " << width << std::endl;
-	std::vector<std::string> res;
+	std::list<std::string> res; // Use a std::list as a stack
 
-//	printVectorOfVectors(allNodes);
-//	for(int i = allNodes.size() - 1; i >= 0; --i) {
 	for(auto& revIter = crbegin(allNodes); revIter != crend(allNodes); ++revIter) {
 		std::string row(width, ' ');
 		int rowIdx = offset;
 		const auto& nodes = *revIter;
 		for(auto& iter = cbegin(nodes); iter != cend(nodes) && rowIdx < row.size(); ++iter) {
 			const auto& nodePtr = *iter;
-			std::cout << "Processing " << nodePtr ->val << '\n';
+			std::cout << "Processing " << (nodePtr? nodePtr ->val : ' ')<< '\n';
 			std::cout << "rowIdx before " << rowIdx << '\n';
-			row[rowIdx] = nodePtr ->val;
+			row[rowIdx] = (nodePtr? nodePtr ->val : ' ');
 			rowIdx += gap + 1;
 			std::cout << "rowIdx after " << rowIdx << '\n';
-
 		}
-		res.emplace_back(row);
-		gap = 2*gap + 1;
-		offset = 2*offset + 1;
+		res.push_front(row);
+		gap = 2 * gap + 1;
+		offset = 2 * offset + 1;
 	}
 
-	for(auto& revIter = crbegin(res); revIter != crend(res); ++revIter) {
-		std::cout << *revIter << '\n';
+	for(auto& iter = cbegin(res); iter != cend(res); ++iter) {
+		std::cout << *iter << '\n';
 	}
 	std::cout << '\n';
 }
