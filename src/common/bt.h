@@ -6,16 +6,12 @@
 #ifndef SRC_COMMON_BT_H_
 #define SRC_COMMON_BT_H_
 
+#include <print.h>
 #include <iostream>
+#include <list>
 #include <memory>
 #include <vector>
-#include <list>
-#include <new> // std::bad_alloc
-#include <string>
-#include <exception>
-#include <cmath> // std::pow
-
-#include "print.h"
+#include <xstring> // <string>
 
 template <typename T>
 struct TreeNode {
@@ -219,9 +215,8 @@ void prettyPrintBT(const tnPtr<T>& root) {
 		offset = 2 * offset + 1;
 	}
 
-	for(auto& iter = cbegin(res); iter != cend(res); ++iter) {
-		std::cout << *iter << '\n';
-	}
+	printContainer(res);
+
 	std::cout << '\n';
 }
 

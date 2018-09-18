@@ -15,7 +15,7 @@ void getUniquePermsHelper(std::vector<std::vector<int>>& res, std::vector<int>& 
 	std::unordered_map<int, int>& freqTable, const size_t n) {
 	if(cur.size() == n) {
 	//	std::cout << "Result gets ";
-		printVector<int>(cur);
+		printContainer(cur);
 		res.emplace_back(cur);
 		return;
 	}
@@ -42,7 +42,7 @@ void getUniquePerms(const std::vector<int>& v) {
 	std::vector<int> cur;
 
 	getUniquePermsHelper(res, cur, freqTable, v.size());
-	printVectorOfVectors<int>(res);
+//	printContainerOfContainers(res);
 
 }
 /*
