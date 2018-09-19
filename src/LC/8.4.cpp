@@ -42,7 +42,7 @@ void getUniquePerms(const std::vector<int>& v) {
 	std::vector<int> cur;
 
 	getUniquePermsHelper(res, cur, freqTable, v.size());
-//	printContainerOfContainers(res);
+	printContainer(res);
 
 }
 /*

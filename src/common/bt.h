@@ -6,40 +6,18 @@
 #ifndef SRC_COMMON_BT_H_
 #define SRC_COMMON_BT_H_
 
+#include <node.h>
 #include <print.h>
 #include <iostream>
 #include <list>
 #include <memory>
 #include <vector>
-#include <xstring> // <string>
+#include <xstring>
 
-template <typename T>
-struct TreeNode {
-	T val;
-	std::shared_ptr<TreeNode<T>> left, right;
-
-	TreeNode(const T v) : val(v) {}
-	TreeNode(const TreeNode& n): val(n.val), left(n.left), right(n.right) {}
-
-	const TreeNode& operator =(const TreeNode& n) {
-		if(this != &n) {
-			val = n.val;
-			left = n.left;
-			right = n.right;
-		}
-		return *this;
-	}
-};
-
-template <typename T>
-using tnPtr = std::shared_ptr<TreeNode<T>>;
 
 /*
 Non member functions to print and create BTs
 They are defined in the header itself to avoid the 'external symbol not found' linker error
-With MSVC, there isn't a compiler/linker error when multiple .cpp files include this header
-For Clang, try using the extern template technique (declare instantiation of the below template functions
-as extern template ...  in all .cpp files that include this header
 */
 
 /*

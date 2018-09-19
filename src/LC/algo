@@ -8,6 +8,5 @@ special cases
 left skew
 right skew
 --
-printing containers in a generic way
-- implement printContainerOfContainers()
 - prettyPrintBT with ints, you've only tested chars
+
