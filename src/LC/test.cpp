@@ -45,7 +45,6 @@ int main() {
 
 	};
 
-
 	for(const auto& levelOrder : levelOrderTrees) {
 		try {
 			const auto& root = createBT(levelOrder, nullVal);

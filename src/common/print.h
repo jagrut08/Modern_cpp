@@ -1,6 +1,6 @@
 /*
  * print.h
- * Routines to pretty print sequential containers
+ * Routines to pretty print STL containers
  */
 
 #ifndef SRC_COMMON_PRINT_H_
@@ -63,7 +63,7 @@ template<typename T>
 struct isSharedPtr<std::shared_ptr<T>> : std::true_type {};
 
 template <typename T>
-void printFunc(std::ostream& out, const std::shared_ptr<T>& t) {
+inline void printFunc(std::ostream& out, const std::shared_ptr<T>& t) {
 	if(t) {
 		out << *t;
 	} else {
@@ -72,7 +72,7 @@ void printFunc(std::ostream& out, const std::shared_ptr<T>& t) {
 }
 
 template <typename T>
-void printFunc(std::ostream& out, const T& t) {
+inline void printFunc(std::ostream& out, const T& t) {
 	out << t;
 }
 
@@ -81,7 +81,7 @@ void printFunc(std::ostream& out, const T& t) {
  * http://louisdx.github.io/cxx-prettyprint/
  * */
 template<typename T>
-void printContainer(const T& t, const std::string delim = ", "){
+inline void printContainer(const T& t, const std::string delim = ", "){
 	// If it's a container of containers, recurse to the leaf-level containers first
 	if constexpr(is_stl_container<typename T::value_type>::value) {
 		std::for_each(std::cbegin(t), std::cend(t), [&t, &delim](const auto& val) {printContainer(val, delim);}); // auto works in C++14 onwards
@@ -99,7 +99,7 @@ void printContainer(const T& t, const std::string delim = ", "){
 		//ostr << "}\n";
 		std::cout << ostr.str();
 
-		// Alternate implementation using constexpr (C++17). Has separate branches for primitive types vs. smart pointers.
+		// Alternate implementation. Has separate branches for primitive types vs. smart pointers.
 			/*
 			if constexpr (isSharedPtr<typename T::value_type>{}) {
 				int i = 0;

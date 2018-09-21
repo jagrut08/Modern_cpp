@@ -10,7 +10,7 @@
 #include <unordered_map>
 
 template <typename T>
-std::unordered_map<T, int> createFreqTableFromVector(const std::vector<T>& v) {
+inline std::unordered_map<T, int> createFreqTableFromVector(const std::vector<T>& v) {
 	std::unordered_map<T, int> res;
 	for(const auto& elem : v){
 		if(res.find(elem) == res.end()) {
@@ -22,7 +22,7 @@ std::unordered_map<T, int> createFreqTableFromVector(const std::vector<T>& v) {
 }
 
 template <typename T>
-void printFreqTable(const std::unordered_map<T, int> table) {
+inline void printFreqTable(const std::unordered_map<T, int> table) {
 	std::ostringstream ostr;
 	ostr << "Frequency table is\n";
 

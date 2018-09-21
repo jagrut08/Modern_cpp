@@ -53,7 +53,7 @@ using tnPtr = std::shared_ptr<TreeNode<T>>;
 
 // Overloaded stream insertion operator
 template <typename T>
-std::ostream& operator <<(std::ostream& out, const Node<T>& n) {
+inline std::ostream& operator <<(std::ostream& out, const Node<T>& n) {
 	out << std::to_string(n.val);
 	return out;
 }
