@@ -2,12 +2,4 @@
 --
 pretty print BT algo/impl
 better algo?
---
-special cases
 
-left skew
-right skew
---
-- prettyPrintBT with ints, you've only tested chars
-
-list of includes is alphabetical

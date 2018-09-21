@@ -125,6 +125,8 @@ void printBT(const tnPtr<T>& root) {
 /*
  * Pretty print.
  * Time O(N) for collecting N nodes using breadth first traversal.
+ * Only prints the first character of the stringified value of a TreeNode
+ * E.g., 'a', '1' if 12 is the value.
  * Size of res vector = depth = d
  * Amount of work done for each string within res = Size of each string in res = 2*2^(d-1) - 1.
  * Total = O(N + (d * 2*2^(d-1) - 1))
@@ -181,20 +183,15 @@ void prettyPrintBT(const tnPtr<T>& root) {
 		const auto& nodes = *revIter;
 		for(auto iter = cbegin(nodes); iter != cend(nodes) && rowIdx < row.size(); ++iter) {
 			const auto& nodePtr = *iter;
-			//std::cout << "Processing " << (nodePtr? nodePtr ->val : ' ')<< '\n';
-			//std::cout << "rowIdx before " << rowIdx << '\n';
-			row[rowIdx] = (nodePtr? nodePtr ->val : ' ');
+			row[rowIdx] = (nodePtr? std::to_string(nodePtr ->val)[0] : ' ');
 			rowIdx += gap + 1;
-		//	std::cout << "rowIdx after " << rowIdx << '\n';
 		}
 		res.push_front(row);
-	//	std::cout << row << '\n';
 		gap = 2 * gap + 1;
 		offset = 2 * offset + 1;
 	}
 
 	printContainer(res, "\n");
-
 	std::cout << '\n';
 }
 
