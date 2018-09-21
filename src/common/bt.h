@@ -12,7 +12,6 @@
 #include <list>
 #include <memory>
 #include <vector>
-#include <xstring>
 
 
 /*
@@ -155,7 +154,7 @@ void prettyPrintBT(const tnPtr<T>& root) {
 					// whether they are nullptrs
 					nextNodes.emplace_back(ptr->left);
 					nextNodes.emplace_back(ptr->right);
-					atLeastOneChildAtNextLevel = (ptr->left || ptr->right);
+					atLeastOneChildAtNextLevel = (ptr->left || ptr->right) || atLeastOneChildAtNextLevel;
 				} else {
 					// Otherwise, add nullptrs for left and right children
 					nextNodes.emplace_back(nullptr);
@@ -176,24 +175,25 @@ void prettyPrintBT(const tnPtr<T>& root) {
 	int offset = 0, gap = 1;
 	std::list<std::string> res; // Use a std::list as a stack
 
-	for(auto& revIter = crbegin(allNodes); revIter != crend(allNodes); ++revIter) {
+	for(auto revIter = std::crbegin(allNodes); revIter != std::crend(allNodes); ++revIter) {
 		std::string row(width, ' ');
 		int rowIdx = offset;
 		const auto& nodes = *revIter;
-		for(auto& iter = cbegin(nodes); iter != cend(nodes) && rowIdx < row.size(); ++iter) {
+		for(auto iter = cbegin(nodes); iter != cend(nodes) && rowIdx < row.size(); ++iter) {
 			const auto& nodePtr = *iter;
-			std::cout << "Processing " << (nodePtr? nodePtr ->val : ' ')<< '\n';
-			std::cout << "rowIdx before " << rowIdx << '\n';
+			//std::cout << "Processing " << (nodePtr? nodePtr ->val : ' ')<< '\n';
+			//std::cout << "rowIdx before " << rowIdx << '\n';
 			row[rowIdx] = (nodePtr? nodePtr ->val : ' ');
 			rowIdx += gap + 1;
-			std::cout << "rowIdx after " << rowIdx << '\n';
+		//	std::cout << "rowIdx after " << rowIdx << '\n';
 		}
 		res.push_front(row);
+	//	std::cout << row << '\n';
 		gap = 2 * gap + 1;
 		offset = 2 * offset + 1;
 	}
 
-	printContainer(res);
+	printContainer(res, "\n");
 
 	std::cout << '\n';
 }

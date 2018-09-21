@@ -40,7 +40,7 @@ struct TreeNode : public Node<T> {
 
 	TreeNode& operator =(const TreeNode& n) {
 		if(this != &n) {
-			val = n.val;
+			Node<T>::val = n.val;
 			left = n.left;
 			right = n.right;
 		}

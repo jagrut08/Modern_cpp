@@ -22,8 +22,6 @@
 #include <unordered_set>
 #include <utility>
 #include <vector>
-#include <xstring>
-#include <xtr1common>
 
 /*
  * https://stackoverflow.com/questions/9407367/determine-if-a-type-is-an-stl-container-at-compile-time/31105859#31105859
@@ -65,8 +63,12 @@ template<typename T>
 struct isSharedPtr<std::shared_ptr<T>> : std::true_type {};
 
 template <typename T>
-void printFunc(std::ostream& out, const std::shared_ptr<T>& t ) {
-	out << *t;
+void printFunc(std::ostream& out, const std::shared_ptr<T>& t) {
+	if(t) {
+		out << *t;
+	} else {
+		throw std::runtime_error("Encountered nullptr while printing!");
+	}
 }
 
 template <typename T>
@@ -86,7 +88,7 @@ void printContainer(const T& t, const std::string delim = ", "){
 	} else {
 		// Print a leaf-level container
 		std::ostringstream ostr;
-		ostr << "{";
+		//ostr << "{";
 		int i = 0;
 		auto printLambda = [&i, &t, &ostr, &delim](const typename T::value_type valueType) {
 			printFunc(ostr, valueType);
@@ -94,7 +96,7 @@ void printContainer(const T& t, const std::string delim = ", "){
 		};
 
 		std::for_each(std::cbegin(t), std::cend(t), printLambda);
-		ostr << "}\n";
+		//ostr << "}\n";
 		std::cout << ostr.str();
 
 		// Alternate implementation using constexpr (C++17). Has separate branches for primitive types vs. smart pointers.
