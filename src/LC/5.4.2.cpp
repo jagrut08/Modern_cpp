@@ -48,6 +48,7 @@ int findMaxDepth(const tnPtr<T>& root) {
 	findMaxDepthHelper(maxDepth, 1, root);
 	return maxDepth;
 }
+
 /*
 int main() {
 	const char nullVal = '\0';
@@ -61,8 +62,8 @@ int main() {
 		{'a', 'b', '\0', 'c'},
 		{'a', '\0', 'b', '\0', '\0', 'c'},
 		{'a', '\0', 'b', '\0', '\0', 'c', 'd', '\0', '\0', '\0', '\0', '\0', 'e'}
-
 	};
+
 	std::vector<int> maxDepths {
 		0,
 		1,
@@ -80,7 +81,7 @@ int main() {
 	int expectedMaxDepth = -1;
 	BOOST_FOREACH(boost::tie(levelOrder, expectedMaxDepth), boost::combine(levelOrderTrees, maxDepths)) {
 		const auto root = createBT(levelOrder, nullVal);
-		printBT(root);
+		prettyPrintBT(root);
 	//	std::cout << '\n';
 		const int maxDepth = findMaxDepth(root);
 		assert(maxDepth == expectedMaxDepth);

@@ -9,6 +9,7 @@
 #include <node.h>
 #include <print.h>
 #include <iostream>
+#include <iomanip>
 #include <list>
 #include <memory>
 #include <vector>
@@ -125,9 +126,10 @@ inline void printBT(const tnPtr<T>& root) {
 /*
  * Pretty print.
  * Time O(N) for collecting N nodes using breadth first traversal.
- * Only prints the first character of the stringified value of a TreeNode.
- * E.g., 'a', '1' if 12 is the value.
+ * Only prints the first character of the stringified value of a TreeNode::val.
+ * E.g., 'a' or '1' if TreeNode::val = 12.
  * Assumes that TreeNode::val is one character wide.
+ * It could be made smarter by multiplying the width and offset variables by width of val, TBD.
  *
  * Time complexity:
  * Size of res vector = depth = d
@@ -148,6 +150,8 @@ inline void prettyPrintBT(const tnPtr<T>& root) {
 
 	std::vector<tnPtr<T>> curNodes {root};
 	std::vector<std::vector<tnPtr<T>>> allNodes;
+
+	// Assemble all nodes into allNodes, level by level
 
 	while(!curNodes.empty()) {
 			allNodes.emplace_back(curNodes);
@@ -178,15 +182,18 @@ inline void prettyPrintBT(const tnPtr<T>& root) {
 	int depth = std::pow(2, allNodes.size() - 1);
 	int width = 2 * depth - 1;
 	int offset = 0, gap = 1;
-	std::list<std::string> res; // Use a std::list as a stack
+	std::list<std::string> res; // emplace always to the front of the list and then traverse left to right
 
 	for(auto revIter = std::crbegin(allNodes); revIter != std::crend(allNodes); ++revIter) {
-		std::string row(width, ' ');
+	//S	std::string row(width, ' ');
 		int rowIdx = offset;
 		const auto& nodes = *revIter;
 		for(auto iter = std::cbegin(nodes); iter != std::cend(nodes) && rowIdx < row.size(); ++iter) {
 			const auto& nodePtr = *iter;
-			row[rowIdx] = (nodePtr? std::to_string(nodePtr ->val)[0] : ' ');
+			if(nodePtr) {
+//				row[rowIdx] = std::to_string(nodePtr ->val)[0];
+				row[rowIdx] = nodePtr ->val;
+			}
 			rowIdx += gap + 1;
 		}
 		res.push_front(row);
@@ -197,5 +204,66 @@ inline void prettyPrintBT(const tnPtr<T>& root) {
 	printContainer(res, "\n");
 	std::cout << '\n';
 }
+
+/*
+ * Pretty print using pre-order
+ * */
+
+template <typename T>
+inline void prettyPrintBTRecur(const tnPtr<T>& root, int indent = 0) {
+	if(!root) {
+		return;
+	}
+
+	std::cout<< root->val << "\n ";
+
+	if(root->left) {
+		prettyPrintBTRecur(root->left, indent + 4);
+	}
+
+	if(root->right) {
+			prettyPrintBTRecur(root->right, indent + 4);
+	}
+
+	if (indent) {
+		std::cout << std::setw(indent) << ' ';
+	}
+}
+
+/* Useful test cases for binary trees
+ *
+	const char nullVal = '\0';
+	std::vector<std::vector<char>> levelOrderTraversals {
+
+		{},
+		{'a'},
+		{'a', 'b', 'c'},
+		{'a', 'b', 'c', 'd', 'e', 'f', 'g'},
+		{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o'},
+		{'a', 'b', 'c', '\0', '\0', 'd'},
+		{'a', 'b', 'c', 'd', '\0', 'e', '\0'},
+		{'a', 'b', '\0', 'c'},
+		{'a', '\0', 'b', '\0', '\0', 'c'},
+
+		{'a', '\0', 'b', '\0', '\0', 'c', 'd', '\0', '\0', '\0', '\0', '\0', 'e', '\0', '\0'},
+		{'a', '\0', 'b', '\0', '\0', 'c', 'd', '\0', '\0', '\0', '\0', 'e', '\0', '\0', '\0'},
+		{'a', '\0', 'b', '\0', '\0', 'c', 'd', '\0', '\0', '\0', 'e', '\0', '\0', '\0', '\0'},
+		{'a', '\0', 'b', '\0', '\0', 'c', 'd', '\0', '\0', 'e', '\0', '\0', '\0', '\0', '\0'},
+		{'a', '\0', 'b', '\0', '\0', 'c', 'd', '\0', 'e', '\0', '\0', '\0', '\0', '\0', '\0'},
+		{'a', '\0', 'b', '\0', '\0', 'c', 'd', 'e', '\0', '\0', '\0', '\0', '\0', '\0', '\0'},
+		{'a', '\0', 'b', '\0', '\0', 'c', 'd', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0'},
+	};
+
+
+	const int nullVal = -1;
+	const std::vector<std::vector<int>> levelOrderTraversals {
+		{1, 2, 3, 4, -1, 5, -1},
+		{1, 2, -1, 3, -1, -1, -1, 4, -1, -1, -1, -1, -1, -1, -1}, // left skew
+		{1, -1, 2, -1, -1, -1, 3, -1, -1, -1, -1, -1, -1, -1, 4}, // right skew
+
+	};
+
+ *
+ * */
 
 #endif /* SRC_COMMON_BT_H_ */
