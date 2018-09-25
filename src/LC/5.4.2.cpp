@@ -4,15 +4,15 @@
  * Maximum depth of a Binary Tree
  */
 
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <cassert>
+#include <bt.h>
 
-#include <boost/range/combine.hpp>
 #include <boost/foreach.hpp>
+#include <boost/range/combine.hpp>
 
-#include "bt.h"
+#include <algorithm>
+#include <cassert>
+#include <iostream>
+#include <vector>
 
 template <typename T>
 void findMaxDepthHelper(int& maxDepth, const int depth, const tnPtr<T>& root) {

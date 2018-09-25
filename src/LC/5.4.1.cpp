@@ -1,11 +1,10 @@
 
+#include <boost/tuple/detail/tuple_basic.hpp>
+#include <bt.h>
+#include <node.h>
 #include <iostream>
-#include <vector>
 #include <list>
-#include <cassert>
-#include <boost/range/combine.hpp>
-
-#include "bt.h"
+#include <vector>
 
 /*
  5.4.1 Minimum depth of binary tree
@@ -98,6 +97,6 @@ int main() {
 		std::cout << "Min depth: " << minDepth << '\n' << '\n';
 	}
 }
-
-
 */
+
+
