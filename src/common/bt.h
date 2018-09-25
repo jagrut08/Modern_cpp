@@ -12,6 +12,7 @@
 #include <iomanip>
 #include <list>
 #include <memory>
+#include <sstream>
 #include <vector>
 
 
@@ -185,14 +186,13 @@ inline void prettyPrintBT(const tnPtr<T>& root) {
 	std::list<std::string> res; // emplace always to the front of the list and then traverse left to right
 
 	for(auto revIter = std::crbegin(allNodes); revIter != std::crend(allNodes); ++revIter) {
-	//S	std::string row(width, ' ');
+		std::string row(width, ' ');
 		int rowIdx = offset;
 		const auto& nodes = *revIter;
 		for(auto iter = std::cbegin(nodes); iter != std::cend(nodes) && rowIdx < row.size(); ++iter) {
 			const auto& nodePtr = *iter;
 			if(nodePtr) {
-//				row[rowIdx] = std::to_string(nodePtr ->val)[0];
-				row[rowIdx] = nodePtr ->val;
+				row[rowIdx] = getFirstChar(*nodePtr);
 			}
 			rowIdx += gap + 1;
 		}

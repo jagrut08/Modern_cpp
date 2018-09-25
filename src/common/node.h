@@ -8,7 +8,7 @@
 
 #include <iostream>
 #include <memory>
-
+#include <string>
 /*
  * A parent class of TreeNode, GraphNode and ListNode
  */
@@ -29,6 +29,7 @@ struct Node {
 		}
 		return *this;
 	}
+
 };
 
 template <typename T>
@@ -58,5 +59,21 @@ inline std::ostream& operator <<(std::ostream& out, const Node<T>& n) {
 	return out;
 }
 
+// Helper functions to pretty-print single character output and their specializations
+
+template <typename T>
+inline char getFirstChar(const Node<T>& n) {
+	return std::to_string(n.val)[0];
+}
+
+template <>
+inline char getFirstChar(const Node<char>& n) {
+	return n.val;
+}
+
+template <>
+inline char getFirstChar(const Node<int>& n) {
+	return '0' + n.val;
+}
 
 #endif /* SRC_COMMON_NODE_H_ */
