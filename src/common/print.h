@@ -88,7 +88,6 @@ inline void printContainer(const T& t, const std::string delim = ", "){
 	} else {
 		// Print a leaf-level container
 		std::ostringstream ostr;
-		//ostr << "{";
 		int i = 0;
 		auto printLambda = [&i, &t, &ostr, &delim](const typename T::value_type valueType) {
 			printFunc(ostr, valueType);
@@ -96,8 +95,7 @@ inline void printContainer(const T& t, const std::string delim = ", "){
 		};
 
 		std::for_each(std::cbegin(t), std::cend(t), printLambda);
-		//ostr << "}\n";
-		std::cout << ostr.str();
+		std::cout << ostr.str() << '\n';
 
 		// Alternate implementation. Has separate branches for primitive types vs. smart pointers.
 			/*

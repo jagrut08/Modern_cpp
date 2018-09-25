@@ -81,7 +81,7 @@ int main() {
 	int expectedMaxDepth = -1;
 	BOOST_FOREACH(boost::tie(levelOrder, expectedMaxDepth), boost::combine(levelOrderTrees, maxDepths)) {
 		const auto root = createBT(levelOrder, nullVal);
-		prettyPrintBT(root);
+		printBT(root);
 	//	std::cout << '\n';
 		const int maxDepth = findMaxDepth(root);
 		assert(maxDepth == expectedMaxDepth);

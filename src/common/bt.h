@@ -93,37 +93,6 @@ inline tnPtr<T> createBT(const std::vector<T>& v, const T& nullVal) {
 	return ptrs[0];
 }
 
-
-template <typename T>
-inline void printBT(const tnPtr<T>& root) {
-	if(!root) {
-			std::cout << "{}\n";
-			return;
-	}
-
-	std::list<tnPtr<T>> queue{root};
-
-	try {
-		while(!queue.empty()) {
-			std::list<tnPtr<T>> tmpQueue;
-			for(const auto& ptr : queue) {
-				std::cout << ptr->val << " ";
-
-				if(ptr->left) {
-					tmpQueue.emplace_back(ptr->left);
-				}
-				if(ptr->right) {
-					tmpQueue.emplace_back(ptr->right);
-				}
-			}
-			// Below won't work if queue and tmpQueue contain const tnPtr
-			queue = tmpQueue;
-			std::cout << '\n';
-		}
-	} catch(const std::exception& e) {
-		std::cerr << e.what() << '\n';
-	}
-}
 /*
  * Pretty print.
  * Time O(N) for collecting N nodes using breadth first traversal.
@@ -145,7 +114,7 @@ inline void printBT(const tnPtr<T>& root) {
  * https://articles.leetcode.com/how-to-pretty-print-binary-tree/
  */
 template <typename T>
-inline void prettyPrintBT(const tnPtr<T>& root) {
+inline void printBT(const tnPtr<T>& root) {
 	if(!root) {
 		std::cout << "{}\n";
 		return;
@@ -208,7 +177,7 @@ inline void prettyPrintBT(const tnPtr<T>& root) {
 }
 
 /*
- * Post order traversal with a user-supplied function
+ * Post order traversal with a user-supplied stateless lambda
  *
  * Type U could be printLamdba as in
  * int i = 0;
@@ -232,6 +201,29 @@ inline void traversePostOrder(const tnPtr<T>& root, U func) {
 	}
 
 	func(root);
+}
+
+
+/*
+ * Pre Order Traversal with a user-supplied stateless lambda
+ * */
+
+template <typename T, typename U>
+inline void traversePreOrder(const tnPtr<T>& root, U func) {
+
+	if(!root) {
+		return;
+	}
+
+	func(root);
+
+	if(root->left) {
+		traversePostOrder(root->left, func);
+	}
+
+	if(root->right) {
+		traversePostOrder(root->right, func);
+	}
 }
 
 /* Useful test cases for binary trees
