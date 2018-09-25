@@ -141,6 +141,8 @@ inline void printBT(const tnPtr<T>& root) {
  * O(d) strings, each string is 2 * (2^d) - 1
  * Total = O(d * 2 * (2^d) - 1) + space for Breadth First traversal (O(N))
  *
+ * An implementation with more bells and whistles can be found here
+ * https://articles.leetcode.com/how-to-pretty-print-binary-tree/
  */
 template <typename T>
 inline void prettyPrintBT(const tnPtr<T>& root) {
@@ -206,28 +208,30 @@ inline void prettyPrintBT(const tnPtr<T>& root) {
 }
 
 /*
- * Pretty print using pre-order
+ * Post order traversal with a user-supplied function
+ *
+ * Type U could be printLamdba as in
+ * int i = 0;
+ * auto printLambda = [&i](const tnPtr<char>& ptr) { std::cout << ptr->val << " " << i++ << '\n'; };
+ *
  * */
 
-template <typename T>
-inline void prettyPrintBTRecur(const tnPtr<T>& root, int indent = 0) {
+template <typename T, typename U>
+inline void traversePostOrder(const tnPtr<T>& root, U func) {
+
 	if(!root) {
 		return;
 	}
 
-	std::cout<< root->val << "\n ";
-
 	if(root->left) {
-		prettyPrintBTRecur(root->left, indent + 4);
+		traversePostOrder(root->left, func);
 	}
 
 	if(root->right) {
-			prettyPrintBTRecur(root->right, indent + 4);
+		traversePostOrder(root->right, func);
 	}
 
-	if (indent) {
-		std::cout << std::setw(indent) << ' ';
-	}
+	func(root);
 }
 
 /* Useful test cases for binary trees

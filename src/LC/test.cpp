@@ -2,48 +2,16 @@
  * test.cpp
  */
 
-#include <bt.h>
 #include <iostream>
-
+#include <stdexcept>
 
 int main() {
-
-	const char nullVal = '\0';
-	std::vector<std::vector<char>> levelOrderTrees {
-
-//		{},
-//		{'a'},
-		{'a', 'b', 'c'},
-//		{'a', 'b', 'c', 'd', 'e', 'f', 'g'},
-//		{'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o'},
-//		{'a', 'b', 'c', '\0', '\0', 'd'},
-//		{'a', 'b', 'c', 'd', '\0', 'e', '\0'},
-//		{'a', 'b', '\0', 'c'},
-//		{'a', '\0', 'b', '\0', '\0', 'c'},
-//
-//		{'a', '\0', 'b', '\0', '\0', 'c', 'd', '\0', '\0', '\0', '\0', '\0', 'e', '\0', '\0'},
-//		{'a', '\0', 'b', '\0', '\0', 'c', 'd', '\0', '\0', '\0', '\0', 'e', '\0', '\0', '\0'},
-//		{'a', '\0', 'b', '\0', '\0', 'c', 'd', '\0', '\0', '\0', 'e', '\0', '\0', '\0', '\0'},
-//		{'a', '\0', 'b', '\0', '\0', 'c', 'd', '\0', '\0', 'e', '\0', '\0', '\0', '\0', '\0'},
-//		{'a', '\0', 'b', '\0', '\0', 'c', 'd', '\0', 'e', '\0', '\0', '\0', '\0', '\0', '\0'},
-//		{'a', '\0', 'b', '\0', '\0', 'c', 'd', 'e', '\0', '\0', '\0', '\0', '\0', '\0', '\0'},
-//		{'a', '\0', 'b', '\0', '\0', 'c', 'd', '\0', '\0', '\0', '\0', '\0', '\0', '\0', '\0'},
-	};
-
-	for(const auto& levelOrder : levelOrderTrees) {
-		try {
-			auto root = createBT(levelOrder, nullVal);
-			prettyPrintBT(root);
-			std::cout << "-----------";
-			prettyPrintBTRecur(root);
-			std::cout << "-----------";
-		} catch(const std::exception& e) {
-			std::cerr << e.what() << '\n';
-		} catch(...) {
-			return -1;
-		}
+	try {
+	} catch(const std::exception& e) {
+		std::cerr << e.what() << '\n';
+	} catch(...) {
+		return -1;
 	}
-
 }
 
 
