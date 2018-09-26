@@ -5,6 +5,7 @@
 #include <iostream>
 #include <stdexcept>
 
+/*
 int main() {
 	try {
 	} catch(const std::exception& e) {
@@ -13,6 +14,6 @@ int main() {
 		return -1;
 	}
 }
-
+*/
 
 

@@ -1,7 +1,10 @@
 
-#include <boost/tuple/detail/tuple_basic.hpp>
 #include <bt.h>
 #include <node.h>
+
+#include <boost/range/combine.hpp>
+#include <boost/tuple/detail/tuple_basic.hpp>
+
 #include <iostream>
 #include <list>
 #include <vector>
