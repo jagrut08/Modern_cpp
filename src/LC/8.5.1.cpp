@@ -85,6 +85,7 @@ std::vector<std::vector<int>> combine(int n, int k) {
 		}
 		return result;
 	}
+/*
 int main() {
 
 	try {
@@ -110,3 +111,4 @@ int main() {
 		return -1;
 	}
 }
+*/
