@@ -173,7 +173,6 @@ inline void printBT(const tnPtr<T>& root) {
 	}
 
 	printContainer(res, "\n");
-	std::cout << '\n';
 }
 
 /*
