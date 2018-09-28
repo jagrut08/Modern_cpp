@@ -4,8 +4,8 @@
 Given a digit string, return all possible letter combinations that the number could represent.
 A mapping of digit to letters (just like on the telephone buttons) is given below.
 
-Input:Digit string ”23”
-Output: [”ad”, ”ae”, ”af”, ”bd”, ”be”, ”bf”, ”cd”, ”ce”, ”cf”].
+Input:Digit string "23"
+Output: [ad, ae, af, bd, be, bf, cd, ce, cf].
  *
  */
 #include <print.h>
@@ -45,9 +45,9 @@ void getPhoneLettersHelper(std::vector<std::string>* res, std::string* curRes, c
 std::vector<std::string> getPhoneLetters(const std::string& str, const std::unordered_map<int, std::string>& keyMap) {
 
 		// Recommended way to use isdigit() on a std::string in an STL algo: https://en.cppreference.com/w/cpp/string/byte/isdigit
-		auto& iter = std::find_if(std::cbegin(str), std::cend(str), [](unsigned char c){ return !std::isdigit(c);});
+		const auto& iter = std::find_if(std::cbegin(str), std::cend(str), [](unsigned char c){ return !std::isdigit(c);});
 		if(iter != std::cend(str)) {
-			throw std::exception("Invalid chars in input");
+			throw std::runtime_error("Invalid chars in input");
 		}
 
 		std::vector<std::string> res;
@@ -123,7 +123,7 @@ int main() {
 	try {
 		const std::vector<std::string> strs {
 			"23",
-		/*	"234",
+			"234",
 			"22",
 			"1",
 			"2",
@@ -131,7 +131,7 @@ int main() {
 			"79",
 			"03",
 			"rqwe" // Non digits
-		*/};
+		};
 		const std::unordered_map<int, std::string> keyMap = {
 				{1, ""},
 				{2, "abc"},
