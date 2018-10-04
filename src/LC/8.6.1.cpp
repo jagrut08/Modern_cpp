@@ -33,6 +33,8 @@ void getPhoneLettersHelper(std::vector<std::string>* res, std::string* curRes, c
 	for(const auto& c : chars) {
 		curRes->push_back(c);
 		getPhoneLettersHelper(res, curRes, idx + 1, str, keyMap);
+		// alternatively you could declare curRes as a pass-by-value param and
+		// call helper with args(res, curRes + c, idx + 1, str, keyMap), and not need to pop_back() below
 		curRes->pop_back();
 	}
 }
