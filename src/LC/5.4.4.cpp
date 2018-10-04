@@ -23,6 +23,7 @@ return
 #include <boost/range/combine.hpp>
 #include <boost/tuple/detail/tuple_basic.hpp>
 
+#include <cassert>
 #include <iostream>
 #include <stdexcept>
 #include <vector>
@@ -96,10 +97,10 @@ int main() {
 				13,
 				-1,
 				6,
-				22
+				22,
 		};
 
-		static_assert(levelOrderTraversals.size() == ns.size(), "Ranges passed to boost::combine not equal in size");
+		assert(levelOrderTraversals.size() == ns.size() && "Ranges passed to boost::combine not equal in size");
 
 		for(auto tup : boost::combine(levelOrderTraversals, ns)) {
 			std::vector<int> levelOrderTraversal;
