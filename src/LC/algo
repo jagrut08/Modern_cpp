@@ -1,2 +1,19 @@
-8.6.1, 5.4.4
---
+9.1, 5.4.4
+
+assert for combine - container sizes should be equal. 
+what happens otherwise? 
+pretty print cannot print multi-char values - print error message 
+DFS/recursive tree traversals - both left and right sub-trees must be traversed. Successful traversal of one doesn't preclude the other!
+
+
+
+
+
+
+
+
+
+
+
+
+ 

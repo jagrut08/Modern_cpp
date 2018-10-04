@@ -82,6 +82,10 @@ inline void printFunc(std::ostream& out, const T& t) {
  * */
 template<typename T>
 inline void printContainer(const T& t, const std::string delim = ", "){
+	if(t.empty()) {
+		std::cout << "{}\n";
+		return;
+	}
 	// If it's a container of containers, recurse to the leaf-level containers first
 	if constexpr(is_stl_container<typename T::value_type>::value) {
 		std::for_each(std::cbegin(t), std::cend(t), [&t, &delim](const auto& val) {printContainer(val, delim);}); // auto works in C++14 onwards

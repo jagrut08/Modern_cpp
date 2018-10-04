@@ -45,7 +45,7 @@ void getPhoneLettersHelper(std::vector<std::string>* res, std::string* curRes, c
 std::vector<std::string> getPhoneLetters(const std::string& str, const std::unordered_map<int, std::string>& keyMap) {
 
 		// Recommended way to use isdigit() on a std::string in an STL algo: https://en.cppreference.com/w/cpp/string/byte/isdigit
-		const auto& iter = std::find_if(std::cbegin(str), std::cend(str), [](unsigned char c){ return !std::isdigit(c);});
+		const auto& iter = std::find_if(std::cbegin(str), std::cend(str), [](unsigned char c){return !std::isdigit(c);});
 		if(iter != std::cend(str)) {
 			throw std::runtime_error("Invalid chars in input");
 		}
@@ -57,7 +57,8 @@ std::vector<std::string> getPhoneLetters(const std::string& str, const std::unor
 }
 /*
  * Iterative solution using queue.
- * Translated into C++ from: https://leetcode.com/problems/letter-combinations-of-a-phone-number/discuss/8064/My-java-solution-with-FIFO-queue
+ * Translated into C++ from
+ * https://leetcode.com/problems/letter-combinations-of-a-phone-number/discuss/8064/My-java-solution-with-FIFO-queue
  *
  * */
 
@@ -96,7 +97,8 @@ std::list<std::string> getPhoneLettersIter(const std::string& str) {
 }
 
 /*
- * Another solution with 2 for() loops: https://leetcode.com/problems/letter-combinations-of-a-phone-number/discuss/8097/My-iterative-sollution-very-simple-under-15-lines
+ * Another solution with 2 for() loops from
+ * https://leetcode.com/problems/letter-combinations-of-a-phone-number/discuss/8097/My-iterative-sollution-very-simple-under-15-lines
  * */
 
 std::vector<std::string> getPhoneLettersIter2(std::string digits) {
