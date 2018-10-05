@@ -32,6 +32,9 @@ return
 Time: O(N) as each node is examined
 Space: O(N) stack frames due to recursion + curPath size O(N) + allPaths size  O(2^(d - 1) * N) if every path is added to allPaths
 */
+
+// Optimization - you can avoid passing curSum as a param if you reduce n at each call
+// the final check becomes rootPtr->val == n
 void findPathsHelper(std::vector<tnPtr<int>>* curPathPtr, int* curSumPtr, std::vector<std::vector<tnPtr<int>>>* allPaths, const tnPtr<int>& rootPtr, const int n) {
 	if(!curPathPtr || !allPaths) {
 		throw std::runtime_error("Invalid inputs");
