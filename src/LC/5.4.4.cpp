@@ -68,7 +68,7 @@ std::vector<std::vector<tnPtr<int>>> findPaths(const tnPtr<int>& root, const int
 	return allPaths;
 }
 
-
+/*
 int main() {
 	try {
 		const int nullVal = -1;
@@ -124,4 +124,4 @@ int main() {
 		return -1;
 	}
 }
-
+*/
