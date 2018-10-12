@@ -3,11 +3,23 @@
 
 Given a binary tree, find the maximum path sum.
 The path may start and end at any node in the tree. For example: Given the below binary tree,
+
+For this problem, a path is defined as any sequence of nodes from some starting node to any node in the tree along the parent-child connections. The path must contain at least one node and does not need to go through the root.
+
  1
 / \
 2  3
 Return 6
- *
+
+
+	-10
+   / \
+  9  20
+    /  \
+   15   7
+
+Output: 42
+
  * 
  * */
 
@@ -24,16 +36,8 @@ int findMaxPathSumHelper(const tnPtr<int>& rootPtr) {
 
 	const int leftSum = findMaxPathSumHelper(rootPtr->left);
 	const int rightSum = findMaxPathSumHelper(rootPtr->right);
-	const int maxChild = std::max(leftSum, rightSum);
-	const int pathThruNode = maxChild + rootPtr->val;
-	if(rootPtr->val > 0) {
-		// If child path is non zero, include it in the return value
-		// otherwise the path terminates at this node
-		return maxChild > 0 ? pathThruNode : rootPtr->val;
-	} else {
-		// rootPtr's value is negative, so it will reduce the child path's contribution
-		return std::max(pathThruNode, 0);
-	}
+	const int pathThruNode = leftSum + rightSum + rootPtr->val;
+	return std::max(std::max(pathThruNode, rootPtr->val);
 }
 
 /*
@@ -78,6 +82,7 @@ int main() {
 				{-10, -14, -15},
 				{0, 1, 2},
 				{-5, 2, 4},
+				{-10, 9, 20, -1, -1, 15, 7},
 			};
 
 			for(const auto& levelOrderTraversal : levelOrderTraversals) {
