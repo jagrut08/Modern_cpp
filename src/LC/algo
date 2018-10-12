@@ -1,4 +1,6 @@
 9.2, 5.4.5
 --
+printBT should print -ve values or longer strings. You already find the center, just start to its left by field width/2
+
 
 

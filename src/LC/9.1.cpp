@@ -102,7 +102,7 @@ int getLengthOfShortestTransform(const std::string& startWord, const std::string
 
 	return 0;
 }
-
+/*
 int main() {
 	try {
 		const std::string startWord = "hit", endWord = "cog";
@@ -114,3 +114,4 @@ int main() {
 		return -1;
 	}
 }
+*/
