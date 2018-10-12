@@ -3,4 +3,28 @@
 printBT should print -ve values or longer strings. You already find the center, just start to its left by field width/2
 
 
+Once DFS decided, process top-down or bottom up?
 
+Top-down 
+void dfsHelper(* outputParamPtr, const tnPtr& rootPtr, ...) {
+	if(!rootPtr) {
+		return;
+	}
+	// Process rootPtr->val, add it to outputParamPtr
+
+	leftVal = dfsHelper(outputParamPtr, rootPtr->left, ...);
+	rightVal = dfsHelper(outputParamPtr, rootPtr->right, ...);
+}
+
+Bottom-up 
+<retVal> dfsHelper(rootPtr) {
+	if(!rootPtr) {
+		return <defaultRetVal>
+	}
+
+	leftVal = dfsHelper(rootPtr->left);
+	rightVal = dfsHelper(rootPtr->right);
+	
+	// Process leftVal, rightVal and rootPtr->val
+	return <processedVal>
+}
