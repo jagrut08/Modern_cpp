@@ -3,32 +3,6 @@
 printBT should print -ve values or longer strings. You already find the center, just start to its left by field width/2 (use 5.4.5 test cases, create char ones)
 level order traversal vector should support nulls - vector of TreeNode<T>? That way you can put -1
 --
-Once DFS decided, process top-down or bottom up? If you need info about children to do processing in the parent node, then bottom-up is appropriate. outputParamPtr used in either case - it can compare values top-down or bottom-up to find max, min, etc. In case of bottom-up algo, the function can return a value + update outputParamPtr.
-
-Top-down, Pre-order, Root-Left-Right
-void dfsHelper(* outputParamPtr, const tnPtr& rootPtr, ...) {
-	if(!rootPtr) {
-		return;
-	}
-	// Process rootPtr->val, update outputParamPtr
-
-	leftVal = dfsHelper(outputParamPtr, rootPtr->left, ...);
-	rightVal = dfsHelper(outputParamPtr, rootPtr->right, ...);
-}
-
-Bottom-up, Post-order, Left-Right-Root 
-<retVal> dfsHelper(* outputParamPtr, const tnPtr& rootPtr, ...) {
-	if(!rootPtr) {
-		return <defaultRetVal>
-	}
-
-	leftVal = dfsHelper(outputParamPtr, rootPtr->left, ...);
-	rightVal = dfsHelper(outputParamPtr, rootPtr->right, ...);
-	
-	// Process leftVal, rightVal, rootPtr->val and update outputParamPtr
-	return <processedVal>
-}
---
  1
 / \
 2  3
@@ -44,6 +18,6 @@ Return 6
 Output: 42
 
 --
-
-findMaxPathSum(rootPtr)
- 
+-- 
+center adjust nodeStr in maxWidth
+remove maxWidth - make dynamic based on largest tree node seen

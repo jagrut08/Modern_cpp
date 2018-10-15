@@ -60,11 +60,12 @@ inline std::ostream& operator <<(std::ostream& out, const Node<T>& n) {
 }
 
 // Helper functions to pretty-print single character output and their specializations
-
+/*
 template <typename T>
-inline char getFirstChar(const Node<T>& n) {
-	return std::to_string(n.val)[0];
+inline std::string getFirstChar(const Node<T>& n) {
+	return std::to_string(n.val);
 }
+
 
 template <>
 inline char getFirstChar(const Node<char>& n) {
@@ -75,5 +76,6 @@ template <>
 inline char getFirstChar(const Node<int>& n) {
 	return '0' + n.val;
 }
+*/
 
 #endif /* SRC_COMMON_NODE_H_ */

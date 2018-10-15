@@ -149,13 +149,27 @@ inline void printBT(const tnPtr<T>& root) {
 				break;
 			}
 	}
+
+//	printContainer(allNodes);
 	// Print nodes thus accumulated in allNodes
 
-	int depth = std::pow(2, allNodes.size() - 1);
-	int width = 2 * depth - 1;
-	int offset = 0, gap = 1;
-	std::list<std::string> res; // emplace always to the front of the list and then traverse left to right
+	int maxWidth = 4;
+	int numLeafNodes = std::pow(2, allNodes.size() - 1);
+	int width = (2 * numLeafNodes - 1) * maxWidth; // numLeafNodes + (numLeafNodes - 1) gaps in between the nodes
+	int offset = 0, gap = maxWidth;
+	std::list<std::string> res;
 
+	/*
+	 * Printing logic is to print a complete binary tree as follows
+	 * E.g., in the example below, node values would be center-adjusted in a string buffer
+	 * of 4 spaces. Nothing is printed for nullptrs
+	 * Basic gap between nodes is also 4 spaces
+------------xxxx------------
+----xxxx------------xxxx----
+xxxx----xxxx----xxxx----xxxx
+	 *
+	 * */
+	// Iterate over nodes bottom-up
 	for(auto revIter = std::crbegin(allNodes); revIter != std::crend(allNodes); ++revIter) {
 		std::string row(width, ' ');
 		int rowIdx = offset;
@@ -163,13 +177,22 @@ inline void printBT(const tnPtr<T>& root) {
 		for(auto iter = std::cbegin(nodes); iter != std::cend(nodes) && rowIdx < row.size(); ++iter) {
 			const auto& nodePtr = *iter;
 			if(nodePtr) {
-				row[rowIdx] = getFirstChar(*nodePtr);
+				const std::string& nodeStr = std::to_string(nodePtr->val);
+			//	std::cout << "nodeStr: " << nodeStr << '\n';
+				for(size_t i = 0; rowIdx + i < row.size() && i < nodeStr.size() && i < maxWidth; ++i) {
+					row[rowIdx + i] = nodeStr[i];
+				}
 			}
-			rowIdx += gap + 1;
+
+			rowIdx += maxWidth + gap + 1;
 		}
+
+		// Add always to the front of res and so that if we traverse it from front to back (left to right),
+		// the tree will be printed top down
+	//	std::cout << row << '\n';
 		res.push_front(row);
-		gap = 2 * gap + 1;
-		offset = 2 * offset + 1;
+		gap = 2 * gap + maxWidth;
+		offset = 2 * offset + maxWidth;
 	}
 
 	printContainer(res, "\n");

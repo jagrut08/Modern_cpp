@@ -29,61 +29,41 @@ Output: 42
 #include <iostream>
 #include <stdexcept>
 
-int findMaxPathSumHelper(const tnPtr<int>& rootPtr) {
-	if(!rootPtr) {
-		return 0;
-	}
-
-	const int leftSum = findMaxPathSumHelper(rootPtr->left);
-	const int rightSum = findMaxPathSumHelper(rootPtr->right);
-	const int pathThruNode = leftSum + rightSum + rootPtr->val;
-	return std::max(std::max(pathThruNode, rootPtr->val);
-}
-
 /*
  * O(N) time and O(N) space due to recursion
- *
+ * Using Post-Order traversal as the sum through a node depends on its children
  * */
 int findMaxPathSum(const tnPtr<int>& rootPtr) {
 	if(!rootPtr) {
-		return 0;
+			return 0;
 	}
 
-	const int leftSum = findMaxPathSumHelper(rootPtr->left);
-	const int rightSum = findMaxPathSumHelper(rootPtr->right);
-
-	if(rootPtr->val >= 0) {
-		if(leftSum > 0 && rightSum > 0) {
-			return leftSum + rightSum + rootPtr->val;
-		} else if(leftSum > 0) {
-			return leftSum + rootPtr->val;
-		} else {
-			return rightSum + rootPtr->val;
-		}
-	} else {
-		return std::max(std::max(leftSum, rightSum), 0);
-	}
+	const int leftSum = findMaxPathSum(rootPtr->left);
+	const int rightSum = findMaxPathSum(rootPtr->right);
+	const int pathThruNode = leftSum + rightSum + rootPtr->val;
+	const int maxChild = std::max(leftSum, rightSum);
+	return std::max(pathThruNode, maxChild);
 }
 
 int main() {
 	try {
 			const int nullVal = -1;
 			const std::vector<std::vector<int>> levelOrderTraversals {
-				{1, 2, 3},
+			/*	{1, 2, 3},
 				{1, 2, -6, 4, -1, 5, -1},
 				{},
 				{5},
 				{5, 1, -1},
 				{1, 2, -1, 3, -1, -1, -1, 4, -1, -1, -1, -1, -1, -1, -1}, // left skew
-				{1, -1, 2, -1, -1, -1, 3, -1, -1, -1, -1, -1, -1, -1, 4}, // right skew
+				{1, -1, 2, -1, -1, -1, 3, -1, -1, -1, -1, -1, -1, -1, 4}, // right skew*/
 
-				{1, 2, -2, -14, -5, 3, 6},
+			//	{1, 2, -2, -14, -5, 3, 6},
 				{1, 2, -2, -14, 5, 3, 6},
-				{-10, -14, -15},
+			/*	{-10, -14, -15},
 				{0, 1, 2},
 				{-5, 2, 4},
 				{-10, 9, 20, -1, -1, 15, 7},
-			};
+			*/};
 
 			for(const auto& levelOrderTraversal : levelOrderTraversals) {
 				const auto& rootPtr = createBT(levelOrderTraversal, nullVal);
