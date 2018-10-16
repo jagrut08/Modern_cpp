@@ -8,8 +8,10 @@
 
 #include <node.h>
 #include <print.h>
-#include <iostream>
+
+#include <algorithm>
 #include <iomanip>
+#include <iostream>
 #include <list>
 #include <memory>
 #include <sstream>
@@ -121,41 +123,56 @@ inline void printBT(const tnPtr<T>& root) {
 	}
 
 	std::vector<tnPtr<T>> curNodes {root};
-	std::vector<std::vector<tnPtr<T>>> allNodes;
+	const std::string& rootStr = std::to_string(root->val);
+	size_t maxWidth = rootStr.size();
+	std::vector<std::vector<std::string>> allNodesStrs;
 
 	// Assemble all nodes into allNodes, level by level
 
 	while(!curNodes.empty()) {
-			allNodes.emplace_back(curNodes);
-			std::vector<tnPtr<T>> nextNodes;
-			bool atLeastOneChildAtNextLevel = false;
-			for(const auto& ptr : curNodes) {
-				if(ptr) {
-					// Add left and right nodes to nextNodes, irrespective of
-					// whether they are nullptrs
-					nextNodes.emplace_back(ptr->left);
-					nextNodes.emplace_back(ptr->right);
-					atLeastOneChildAtNextLevel = (ptr->left || ptr->right) || atLeastOneChildAtNextLevel;
-				} else {
-					// Otherwise, add nullptrs for left and right children
-					nextNodes.emplace_back(nullptr);
-					nextNodes.emplace_back(nullptr);
-				}
-			}
-			// Continue only if there is a child at the next level
-			if(atLeastOneChildAtNextLevel) {
-				curNodes = nextNodes;
+		//	allNodeStrs.emplace_back(curNodesStrs);
+		//	std::cout << "Adding\n";
+	//		printContainer(curNodesStrs);
+	//		curNodesStrs.clear();
+
+		std::vector<std::string> curNodesStrs{};
+		std::vector<tnPtr<T>> nextNodes;
+		bool atLeastOneChildAtNextLevel = false;
+		for(const auto& ptr : curNodes) {
+			if(ptr) {
+				// Add left and right nodes to nextNodes, irrespective of
+				// whether they are nullptrs
+				nextNodes.emplace_back(ptr->left);
+				nextNodes.emplace_back(ptr->right);
+
+				const std::string& nodeStr = std::to_string(ptr->val);
+				curNodesStrs.emplace_back(nodeStr);
+				maxWidth = std::max(maxWidth, nodeStr.size());
+				atLeastOneChildAtNextLevel = (ptr->left || ptr->right) || atLeastOneChildAtNextLevel;
 			} else {
-				break;
+				// Otherwise, add nullptrs for left and right children
+				nextNodes.emplace_back(nullptr);
+				nextNodes.emplace_back(nullptr);
+				curNodesStrs.emplace_back("");
 			}
+		}
+		allNodesStrs.emplace_back(curNodesStrs);
+		// Continue only if there is a child at the next level
+		if(atLeastOneChildAtNextLevel) {
+			curNodes = nextNodes;
+		} else {
+			break;
+		}
 	}
 
-//	printContainer(allNodes);
+	std::cout << "allNodeStrs\n";
+	printContainer(allNodesStrs);
+	std::cout << "maxWidth: " << maxWidth << '\n';
 	// Print nodes thus accumulated in allNodes
 
-	int maxWidth = 4;
-	int numLeafNodes = std::pow(2, allNodes.size() - 1);
+	int numLeafNodes = std::pow(2, allNodesStrs.size() - 1);
 	int width = (2 * numLeafNodes - 1) * maxWidth; // numLeafNodes + (numLeafNodes - 1) gaps in between the nodes
+	std::cout << "width: " << width << '\n';
 	int offset = 0, gap = maxWidth;
 	std::list<std::string> res;
 
@@ -170,26 +187,22 @@ xxxx----xxxx----xxxx----xxxx
 	 *
 	 * */
 	// Iterate over nodes bottom-up
-	for(auto revIter = std::crbegin(allNodes); revIter != std::crend(allNodes); ++revIter) {
+	for(auto revIter = std::crbegin(allNodesStrs); revIter != std::crend(allNodesStrs); ++revIter) {
 		std::string row(width, ' ');
 		int rowIdx = offset;
-		const auto& nodes = *revIter;
-		for(auto iter = std::cbegin(nodes); iter != std::cend(nodes) && rowIdx < row.size(); ++iter) {
-			const auto& nodePtr = *iter;
-			if(nodePtr) {
-				const std::string& nodeStr = std::to_string(nodePtr->val);
-			//	std::cout << "nodeStr: " << nodeStr << '\n';
-				for(size_t i = 0; rowIdx + i < row.size() && i < nodeStr.size() && i < maxWidth; ++i) {
+		for(const auto& nodeStr : *revIter) {
+			std::cout << "nodeStr: " << nodeStr << '\n';
+			std::cout << "rowIdx: " << rowIdx << '\n';
+			for(size_t i = 0; rowIdx + i < row.size() && i < nodeStr.size() && i < maxWidth; ++i) {
 					row[rowIdx + i] = nodeStr[i];
-				}
 			}
 
-			rowIdx += maxWidth + gap + 1;
+			rowIdx += gap + 1;
 		}
 
 		// Add always to the front of res and so that if we traverse it from front to back (left to right),
 		// the tree will be printed top down
-	//	std::cout << row << '\n';
+		std::cout << "row: " << row << '\n';
 		res.push_front(row);
 		gap = 2 * gap + maxWidth;
 		offset = 2 * offset + maxWidth;
