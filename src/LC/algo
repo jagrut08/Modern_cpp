@@ -1,8 +1,5 @@
 9.2, 5.4.5
 --
-printBT should print -ve values or longer strings. You already find the center, just start to its left by field width/2 (use 5.4.5 test cases, create char ones)
-level order traversal vector should support nulls - vector of TreeNode<T>? That way you can put -1
---
  1
 / \
 2  3
@@ -16,8 +13,4 @@ Return 6
    15   7
 
 Output: 42
-
 --
--- 
-center adjust nodeStr in maxWidth
-remove maxWidth - make dynamic based on largest tree node seen

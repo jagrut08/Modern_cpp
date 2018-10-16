@@ -47,27 +47,26 @@ int findMaxPathSum(const tnPtr<int>& rootPtr) {
 
 int main() {
 	try {
-			const int nullVal = -1;
-			const std::vector<std::vector<int>> levelOrderTraversals {
-			{1, 2, 3},
-				{1, 2, -6, 4, -1, 5, -1},
+			const std::vector<std::vector<TreeNode<int>>> levelOrderNodes {
+				{1, 2, 3},
+				{1, 2, -6, 4, nullptr, 5, nullptr},
 				{},
 				{5},
-				{5, 1, -1},
-				{1, 2, -1, 3, -1, -1, -1, 4, -1, -1, -1, -1, -1, -1, -1}, // left skew
-				{1, -1, 2, -1, -1, -1, 3, -1, -1, -1, -1, -1, -1, -1, 4}, // right skew*/
+				{5, 1, nullptr},
+				{1, 2, nullptr, 3, nullptr, nullptr, nullptr, 4, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr}, // left skew
+				{1, nullptr, 2, nullptr, nullptr, nullptr, 3, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 4}, // right skew
 
 				{1, 2, -2, -14, -5, 3, 6},
 				{1, 2, -2, -14, 5, 3, 6},
 				{-10, -14, -15},
 				{0, 1, 2},
 				{-5, 2, 4},
-				{-10, 9, 20, -1, -1, 15, 7},
+				{-10, 9, 20, nullptr, nullptr, 15, 7},
 				{1000, 20000, -5600}
 			};
 
-			for(const auto& levelOrderTraversal : levelOrderTraversals) {
-				const auto& rootPtr = createBT(levelOrderTraversal, nullVal);
+			for(const auto& nodes : levelOrderNodes) {
+				const auto& rootPtr = createBTFromNodes(nodes);
 				printBT(rootPtr);
 				std::cout << "Max Path Sum: " << findMaxPathSum(rootPtr) << '\n';
 			}

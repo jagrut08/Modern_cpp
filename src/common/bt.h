@@ -46,47 +46,100 @@ E.g., {1, 2, 3}, {1} => BT with 1 at the root, 2 as left node, 3 as right node
  * space, while the iterative approach allocates a vector up-front, and is also O(N)
  *
  */
+
 template <typename T>
+[[deprecated("Replaced by createBTFromNodes, which doesn't require a nullVal")]]
 inline tnPtr<T> createBT(const std::vector<T>& v, const T& nullVal) {
 	if(v.empty() || v[0] == nullVal) {
 		return nullptr;
 	}
+	// Store pointers to TreeNodes created previously
 	std::vector<tnPtr<T>> ptrs(v.size(), nullptr);
 
-	try{
-		ptrs[0] = std::make_shared<TreeNode<T>>(v[0]);
-		tnPtr<T> parent;
-		for(size_t childIdx = 1, parentIdx = 0; childIdx < v.size(); ++parentIdx) {
+	try {
+			ptrs[0] = std::make_shared<TreeNode<T>>(v[0]);
+			tnPtr<T> parent;
+			for(size_t childIdx = 1, parentIdx = 0; childIdx < v.size(); ++parentIdx) {
 
-			// We need to keep track of pointers to TreeNodes created previously so that the linkages of parent->children can be
-			// done correctly. parent TreeNode will always exist at this point so should not be re-created.
-			parent = ptrs[parentIdx];
+				// We need to keep track of pointers to TreeNodes created previously so that the linkages of parent->children can be
+				// done correctly. parent TreeNode will always exist at this point so should not be re-created.
+				parent = ptrs[parentIdx];
 
-			if(v[childIdx] != nullVal) {
-				ptrs[childIdx] = std::make_shared<TreeNode<T>>(v[childIdx]);
-				if(parent) {
-					parent->left = ptrs[childIdx];
-				} else {
-					std::cerr << "Parent is null, but left child is not! Check the input vector.";
-					return nullptr;
-				}
-
-			}
-
-			++childIdx;
-			if(childIdx < v.size()) {
 				if(v[childIdx] != nullVal) {
 					ptrs[childIdx] = std::make_shared<TreeNode<T>>(v[childIdx]);
 					if(parent) {
-						parent->right = ptrs[childIdx];
+						parent->left = ptrs[childIdx];
 					} else {
-						std::cerr << "Parent is null, but right child is not! Check the input vector.";
+						std::cerr << "Parent is null, but left child is not! Check the input vector.";
 						return nullptr;
 					}
+
 				}
+
 				++childIdx;
+				if(childIdx < v.size()) {
+					if(v[childIdx] != nullVal) {
+						ptrs[childIdx] = std::make_shared<TreeNode<T>>(v[childIdx]);
+						if(parent) {
+							parent->right = ptrs[childIdx];
+						} else {
+							std::cerr << "Parent is null, but right child is not! Check the input vector.";
+							return nullptr;
+						}
+					}
+					++childIdx;
+				}
 			}
-		}
+	} catch(const std::bad_alloc& e) {
+		std::cerr << e.what() << '\n';
+		return nullptr;
+	}
+
+	return ptrs[0];
+}
+
+template <typename T>
+inline tnPtr<T> createBTFromNodes(const std::vector<TreeNode<T>>& v) {
+	if(v.empty() || v[0].isNull) {
+		return nullptr;
+	}
+	// Store pointers to TreeNodes created previously
+	std::vector<tnPtr<T>> ptrs(v.size(), nullptr);
+
+	try {
+			ptrs[0] = std::make_shared<TreeNode<T>>(v[0]);
+			tnPtr<T> parent;
+			for(size_t childIdx = 1, parentIdx = 0; childIdx < v.size(); ++parentIdx) {
+
+				// We need to keep track of pointers to TreeNodes created previously so that the linkages of parent->children can be
+				// done correctly. parent TreeNode will always exist at this point so should not be re-created.
+				parent = ptrs[parentIdx];
+
+				if(!v[childIdx].isNull) {
+					ptrs[childIdx] = std::make_shared<TreeNode<T>>(v[childIdx]);
+					if(parent) {
+						parent->left = ptrs[childIdx];
+					} else {
+						std::cerr << "Parent is null, but left child is not! Check the input vector.";
+						return nullptr;
+					}
+
+				}
+
+				++childIdx;
+				if(childIdx < v.size()) {
+					if(!v[childIdx].isNull) {
+						ptrs[childIdx] = std::make_shared<TreeNode<T>>(v[childIdx]);
+						if(parent) {
+							parent->right = ptrs[childIdx];
+						} else {
+							std::cerr << "Parent is null, but right child is not! Check the input vector.";
+							return nullptr;
+						}
+					}
+					++childIdx;
+				}
+			}
 	} catch(const std::bad_alloc& e) {
 		std::cerr << e.what() << '\n';
 		return nullptr;
@@ -121,13 +174,12 @@ inline void printBT(const tnPtr<T>& root) {
 		std::cout << "{}\n";
 		return;
 	}
-
 	std::vector<tnPtr<T>> curNodes {root};
 	const std::string& rootStr = std::to_string(root->val);
 	size_t maxWidth = rootStr.size();
 	std::vector<std::vector<std::string>> allNodesStrs;
 
-	// Assemble all nodes into allNodes, level by level
+	// Assemble all node values as stirngs into allNodesStrs, level by level
 
 	while(!curNodes.empty()) {
 		std::vector<std::string> curNodesStrs{};
@@ -185,9 +237,9 @@ xxxx----xxxx----xxxx----xxxx
 				arrows[rowIdx] = (leftChild? '/' : '\\');
 			}
 
-			for(size_t i = 0; rowIdx + i < row.size() && i < nodeStr.size() && i < maxWidth; ++i) {
-					row[rowIdx + i] = nodeStr[i];
-			}
+			// nodeStr is written into row, starting at rowIdx
+			// TODO - center justify nodeStr
+			row.replace(rowIdx, nodeStr.size(), nodeStr);
 
 			leftChild = !leftChild;
 			rowIdx += maxWidth + gap;
