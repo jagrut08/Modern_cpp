@@ -50,20 +50,21 @@ int main() {
 			const int nullVal = -1;
 			const std::vector<std::vector<int>> levelOrderTraversals {
 			{1, 2, 3},
-			/*	{1, 2, -6, 4, -1, 5, -1},
+				{1, 2, -6, 4, -1, 5, -1},
 				{},
 				{5},
 				{5, 1, -1},
 				{1, 2, -1, 3, -1, -1, -1, 4, -1, -1, -1, -1, -1, -1, -1}, // left skew
 				{1, -1, 2, -1, -1, -1, 3, -1, -1, -1, -1, -1, -1, -1, 4}, // right skew*/
 
-			//	{1, 2, -2, -14, -5, 3, 6},
-			//	{1, 2, -2, -14, 5, 3, 6},
-			/*	{-10, -14, -15},
+				{1, 2, -2, -14, -5, 3, 6},
+				{1, 2, -2, -14, 5, 3, 6},
+				{-10, -14, -15},
 				{0, 1, 2},
 				{-5, 2, 4},
 				{-10, 9, 20, -1, -1, 15, 7},
-			*/};
+				{1000, 20000, -5600}
+			};
 
 			for(const auto& levelOrderTraversal : levelOrderTraversals) {
 				const auto& rootPtr = createBT(levelOrderTraversal, nullVal);

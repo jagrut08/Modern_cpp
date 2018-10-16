@@ -130,11 +130,6 @@ inline void printBT(const tnPtr<T>& root) {
 	// Assemble all nodes into allNodes, level by level
 
 	while(!curNodes.empty()) {
-		//	allNodeStrs.emplace_back(curNodesStrs);
-		//	std::cout << "Adding\n";
-	//		printContainer(curNodesStrs);
-	//		curNodesStrs.clear();
-
 		std::vector<std::string> curNodesStrs{};
 		std::vector<tnPtr<T>> nextNodes;
 		bool atLeastOneChildAtNextLevel = false;
@@ -165,14 +160,8 @@ inline void printBT(const tnPtr<T>& root) {
 		}
 	}
 
-	std::cout << "allNodeStrs\n";
-	printContainer(allNodesStrs);
-	std::cout << "maxWidth: " << maxWidth << '\n';
-	// Print nodes thus accumulated in allNodes
-
 	int numLeafNodes = std::pow(2, allNodesStrs.size() - 1);
 	int width = (2 * numLeafNodes - 1) * maxWidth; // numLeafNodes + (numLeafNodes - 1) gaps in between the nodes
-	std::cout << "width: " << width << '\n';
 	int offset = 0, gap = maxWidth;
 	std::list<std::string> res;
 
@@ -188,26 +177,33 @@ xxxx----xxxx----xxxx----xxxx
 	 * */
 	// Iterate over nodes bottom-up
 	for(auto revIter = std::crbegin(allNodesStrs); revIter != std::crend(allNodesStrs); ++revIter) {
-		std::string row(width, ' ');
+		std::string row(width, ' '), arrows(width, ' ');
 		int rowIdx = offset;
+		bool leftChild = true;
 		for(const auto& nodeStr : *revIter) {
-			std::cout << "nodeStr: " << nodeStr << '\n';
-			std::cout << "rowIdx: " << rowIdx << '\n';
+			if(nodeStr.size()) {
+				arrows[rowIdx] = (leftChild? '/' : '\\');
+			}
+
 			for(size_t i = 0; rowIdx + i < row.size() && i < nodeStr.size() && i < maxWidth; ++i) {
 					row[rowIdx + i] = nodeStr[i];
 			}
 
-			rowIdx += gap + 1;
+			leftChild = !leftChild;
+			rowIdx += maxWidth + gap;
 		}
 
 		// Add always to the front of res and so that if we traverse it from front to back (left to right),
 		// the tree will be printed top down
-		std::cout << "row: " << row << '\n';
 		res.push_front(row);
+		res.push_front(arrows);
+
 		gap = 2 * gap + maxWidth;
 		offset = 2 * offset + maxWidth;
 	}
 
+	// Remove the arrow above root node
+	res.pop_front();
 	printContainer(res, "\n");
 }
 
