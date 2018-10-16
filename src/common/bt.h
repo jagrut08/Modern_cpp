@@ -98,9 +98,16 @@ inline tnPtr<T> createBT(const std::vector<T>& v, const T& nullVal) {
 	return ptrs[0];
 }
 
+/*
+ * Create a Binary Tree from TreeNodes and print it after creation.
+ * */
+
 template <typename T>
-inline tnPtr<T> createBTFromNodes(const std::vector<TreeNode<T>>& v) {
+inline tnPtr<T> createBTFromNodes(const std::vector<TreeNode<T>>& v, bool printAfterCreating = true) {
 	if(v.empty() || v[0].isNull) {
+		if(printAfterCreating) {
+			std::cout << "{}\n";
+		}
 		return nullptr;
 	}
 	// Store pointers to TreeNodes created previously
@@ -143,6 +150,10 @@ inline tnPtr<T> createBTFromNodes(const std::vector<TreeNode<T>>& v) {
 	} catch(const std::bad_alloc& e) {
 		std::cerr << e.what() << '\n';
 		return nullptr;
+	}
+
+	if(printAfterCreating) {
+		printBT(ptrs[0]);
 	}
 
 	return ptrs[0];
