@@ -93,6 +93,8 @@ int findMaxPathSum(const tnPtr<int>& rootPtr) {
  * Leetcode discuss solution for comparison
  * https://leetcode.com/problems/binary-tree-maximum-path-sum/discuss/39775/Accepted-short-solution-in-Java
  *
+ * GFG also has similar algo
+ * https://www.geeksforgeeks.org/find-maximum-path-sum-in-a-binary-tree/
  * */
 
  int maxValue;
@@ -126,8 +128,8 @@ int main() {
 				{0, 1, 2},
 				{-5, 2, 4},
 				{-10, 9, 20, nullptr, nullptr, 15, 7},
-				{1000, 20000, -5600},
-				{},
+				{10, 2, 10, 20, 1, nullptr, -25, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, 3, 4},
+	//			{},
 			};
 
 			for(const auto& nodes : levelOrderNodes) {

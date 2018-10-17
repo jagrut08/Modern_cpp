@@ -1,5 +1,5 @@
 /*
- * btnew.h
+ * bt.h
  *
  */
 
@@ -127,7 +127,7 @@ inline tnPtr<T> createBTFromNodes(const std::vector<TreeNode<T>>& v, bool printA
 					if(parent) {
 						parent->left = ptrs[childIdx];
 					} else {
-						std::cerr << "Parent is null, but left child is not! Check the input vector.";
+						std::cerr << "createBT error: Parent is null, but left child is not! Check the input vector.";
 						return nullptr;
 					}
 
@@ -140,7 +140,7 @@ inline tnPtr<T> createBTFromNodes(const std::vector<TreeNode<T>>& v, bool printA
 						if(parent) {
 							parent->right = ptrs[childIdx];
 						} else {
-							std::cerr << "Parent is null, but right child is not! Check the input vector.";
+							std::cerr << "createBT error: Parent is null, but right child is not! Check the input vector.";
 							return nullptr;
 						}
 					}
