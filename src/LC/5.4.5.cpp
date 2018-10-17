@@ -27,42 +27,57 @@ Output: 42
 
 #include <algorithm>
 #include <iostream>
-#include <limits>
 #include <stdexcept>
 
-/*
- * O(N) time and O(N) space due to recursion
- * Using Post-Order traversal as the max sum path at a node depends on its children (their max sum)
- * */
-
 struct Result {
-	int sum;
-	bool canBeAdded;
+	int localPath, connectingPath;
+    bool localPathExists;
 
-	Result(const int s, const bool b) : sum(s), canBeAdded(b) {}
+	Result(const int l, const int c, const bool e) : localPath(l), connectingPath(c), localPathExists(e) {}
 
-	Result(const Result& r) : sum(r.sum), canBeAdded(r.canBeAdded) {}
-
+	Result(const Result& r) : localPath(r.localPath), connectingPath(r.connectingPath), localPathExists(r.localPathExists) {}
 };
 
+std::ostream& operator <<(std::ostream& out, const Result& r) {
+	return out << "(" << r.localPath << ", " << r.connectingPath << ", " << std::boolalpha << r.localPathExists << ")";
+}
+/*
+ There are two types of paths at each node:
+A path that cannot be added to parent's path - a path through left child, right child and the node itself, aka "localPath"
+A path that can be added to the parent's path - a path through node including either left or right child, or neither, but not both, aka "connectingPath"
+
+One cannot compare these 2 paths at a node - either could lead to global maximum. localPath could be greater than connectingPath, but once connectingPath gets added to parent's connecting path, it may exceed localPath.
+
+Also, for leaf nodes, there isn't a localPath. So maintain "localPathExists" to check for whether a valid localPath was ever calculated or not.
+
+Complexity:
+O(N) time and O(N) space due to recursion
+Using Post-Order traversal as the max sum path at a node depends on its children (their max sum paths)
+*
+* */
 Result findMaxPathSumHelper(const tnPtr<int>& rootPtr) {
 	if(!rootPtr) {
-			return Result(std::numeric_limits<int>::min(), true);
+			return Result(0,0, false);
 	}
 
-	const Result leftChildSum = findMaxPathSumHelper(rootPtr->left);
-	const Result rightChildSum = findMaxPathSumHelper(rootPtr->right);
-	const int maxChildSum = std::max(leftChildSum.sum, rightChildSum.sum);
+	const Result leftChildPaths = findMaxPathSumHelper(rootPtr->left);
+	const Result rightChildPaths = findMaxPathSumHelper(rootPtr->right);
+	const int localPathHere = leftChildPaths.connectingPath + rightChildPaths.connectingPath + rootPtr->val;
 
-	int pathThruNodeSum = rootPtr->val;
-	if(leftChildSum.canBeAdded && leftChildSum.sum > 0) {
-		pathThruNodeSum += leftChildSum.sum;
-	}
-	if(rightChildSum.canBeAdded && rightChildSum.sum > 0) {
-		pathThruNodeSum += rightChildSum.sum;
+	int maxLocalPathSeen = localPathHere;
+	if(leftChildPaths.localPathExists) {
+		maxLocalPathSeen = std::max(maxLocalPathSeen, leftChildPaths.localPath);
 	}
 
-	return pathThruNodeSum > maxChildSum ? Result(pathThruNodeSum, true) : Result(maxChildSum, false);
+	if(rightChildPaths.localPathExists) {
+		maxLocalPathSeen = std::max(maxLocalPathSeen, rightChildPaths.localPath);
+	}
+
+	const int maxChildConnectingPath = std::max(0, std::max(leftChildPaths.connectingPath, rightChildPaths.connectingPath));
+	int connectingPathThruNode = rootPtr->val + maxChildConnectingPath;
+
+	//std::cout << "Returning " << Result(maxLocalPathSeen, connectingPathHere) << '\n';
+	return Result(maxLocalPathSeen, connectingPathThruNode, true);
 }
 
 int findMaxPathSum(const tnPtr<int>& rootPtr) {
@@ -70,8 +85,32 @@ int findMaxPathSum(const tnPtr<int>& rootPtr) {
 		throw std::runtime_error("rootPtr is empty");
 	}
 
-	return findMaxPathSumHelper(rootPtr).sum;
+	const Result& res = findMaxPathSumHelper(rootPtr);
+	return res.localPath > res.connectingPath && res.localPathExists ? res.localPath : res.connectingPath;
 }
+
+/*
+ * Leetcode discuss solution for comparison
+ * https://leetcode.com/problems/binary-tree-maximum-path-sum/discuss/39775/Accepted-short-solution-in-Java
+ *
+ * */
+
+ int maxValue;
+
+ int maxPathDown(const tnPtr<int>& rootPtr) {
+        if (!rootPtr) return 0;
+        int left = std::max(0, maxPathDown(rootPtr->left));
+        int right = std::max(0, maxPathDown(rootPtr->right));
+        maxValue = std::max(maxValue, left + right + rootPtr->val); // equivalent to globally max "localPath"
+        return std::max(left, right) + rootPtr->val;// equivalent to "connectingPath"
+ }
+
+ int maxPathSum(const tnPtr<int>& rootPtr) {
+        maxValue = std::numeric_limits<int>::min();
+        maxPathDown(rootPtr);
+        return maxValue;
+    }
+
 int main() {
 	try {
 			const std::vector<std::vector<TreeNode<int>>> levelOrderNodes {
@@ -93,7 +132,7 @@ int main() {
 
 			for(const auto& nodes : levelOrderNodes) {
 				const auto& rootPtr = createBTFromNodes(nodes);
-				std::cout << "Max Path Sum: " << findMaxPathSum(rootPtr) << '\n' << '\n';
+				std::cout << "Max Path Sum: " << findMaxPathSum(rootPtr) <<  ", " << maxPathSum(rootPtr) << '\n' << '\n';
 			}
 		} catch(const std::exception& e) {
 			std::cerr << "Exception in main(): " << e.what() << '\n';
