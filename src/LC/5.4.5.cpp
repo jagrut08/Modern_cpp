@@ -112,7 +112,7 @@ int findMaxPathSum(const tnPtr<int>& rootPtr) {
         maxPathDown(rootPtr);
         return maxValue;
     }
-
+/*
 int main() {
 	try {
 			const std::vector<std::vector<TreeNode<int>>> levelOrderNodes {
@@ -142,3 +142,4 @@ int main() {
 			return -1;
 		}
 }
+*/

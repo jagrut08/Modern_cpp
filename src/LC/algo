@@ -1,4 +1,40 @@
 9.2, 5.4.5
 --
+unordered_set carries 2 pieces of info: 1) Whether key exists/has been seen before 2) Its value
+--
+start and endWord are not in dict
+--
+start and end word are diffrent sizes or both empty
+start end end word are equal
+dict empty
+no path
+multiple paths
+--
+
+findShortest(startWord, endWord, dict)
+ validation
+ 
+ curQueue {startWord}
+ 
+ map of child -> parent
+ res is empty
+ 
+ while curQueue not empty and res empty
+ 	nextQueue {}
+ 	iterate over each word in curQueue, queueWord
+ 		get words that are one character different (must be in dict or endWord and not seen before - check parentChildMap - helper function)
+ 		add those words to childParentMap, with parent as QueueWord
+ 		add those words to nextQueue
+ 		if word is endWord
+			create path by back tracking, starting with end Word, (helper function)
+			add path to res
+	
+ curQueue = nextQueue		
+return res
+
+
+std::vector<std::string> getWordsOneCharAway(word, dict, endWord, parentChildMap)
+
+getPathToStartWord(word, parentChildMap)
 
 
