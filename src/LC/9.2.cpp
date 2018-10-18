@@ -33,9 +33,13 @@ Note:
 
 using MapType = std::unordered_map<std::string, std::string>;
 
+/*
+ * Backtrack using childParentMap to find path from a child word to the startWord
+ * */
 std::vector<std::string> getPathToStartWord(const std::string& word, const MapType& childParentMap) {
 	std::vector<std::string> res;
 	std::string tmpWord = word; // Can't use std::string& tmpWord = word as tmpWord is non-const ref that refers to the const word. Compiler error.
+								// const std::string& works here, but this line fails to compile: tmpWord = childParentMap.at(tmpWord);
 	while(childParentMap.count(tmpWord)) {
 		res.emplace_back(tmpWord);
 		tmpWord = childParentMap.at(tmpWord);
@@ -63,8 +67,14 @@ std::vector<std::string> getWordsOneCharAway(const std::string& word, const std:
 	return res;
 }
 /*
+Using BFS as we need to find the shortest path
+Using a map of child string -> parent string to back-track and find the path to the parent node
+
 Complexity
 O(N) time and space, due to BFS
+
+Leetcode shows a similar solution, using BFS to find the shortest path length, then DFS to find the actual path
+https://leetcode.com/problems/word-ladder-ii/discuss/40475/My-concise-JAVA-solution-based-on-BFS-and-DFS
 */
 std::vector<std::vector<std::string>> findShortestTransforms(const std::string& startWord, const std::string& endWord, const std::unordered_set<std::string>& dict) {
 	std::vector<std::vector<std::string>> res;
@@ -105,13 +115,14 @@ std::vector<std::vector<std::string>> findShortestTransforms(const std::string& 
 
 int main() {
 	try {
-			const std::string& startWord = "hit", endWord = "zzz"; // "hit" "cog"
-			const std::unordered_set<std::string> dict {"hot","dot","dog","lot","log"}; // {}
-			const auto& res = findShortestTransforms(startWord, endWord, dict);
-			printContainer(res);
-		} catch(const std::exception& e) {
-			std::cerr << "Exception in main(): " << e.what() << '\n';
-		} catch(...) {
-			return -1;
-		}
+		const std::string& startWord = "hit", endWord = "zzz"; // "hit" "cog"
+		const std::unordered_set<std::string> dict {"hot","dot","dog","lot","log"}; // {}
+		const auto& res = findShortestTransforms(startWord, endWord, dict);
+		printContainer(res);
+	} catch(const std::exception& e) {
+		std::cerr << "Exception in main(): " << e.what() << '\n';
+	} catch(...) {
+		return -1;
+	}
 }
+
