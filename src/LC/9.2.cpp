@@ -112,7 +112,7 @@ std::vector<std::vector<std::string>> findShortestTransforms(const std::string& 
 
 	return res;
 }
-
+/*
 int main() {
 	try {
 		const std::string& startWord = "hit", endWord = "zzz"; // "hit" "cog"
@@ -125,4 +125,4 @@ int main() {
 		return -1;
 	}
 }
-
+*/
