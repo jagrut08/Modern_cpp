@@ -1,9 +1,2 @@
-5.4.7, 9.3 
+5.4.7, 9.4
 --
-DFS in matrix - next cells could be top, bottom, left, right, and optionally corners. Create vectors nextRows and nextCols that hold next row and next column coordinates, carefully match up the row and col pairs. Also, only 1 needed over 2 vectors afterwards. 
-
-output params imply nullptr checks in functions receiving those ptrs!
---
-Run more test cases for 9.3
-
-	

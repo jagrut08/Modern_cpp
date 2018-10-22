@@ -57,6 +57,8 @@ bool findValidRegion(std::vector<std::vector<bool>>* visitedPtr, std::vector<std
 			continue;
 		}
 
+		// If one of the paths is not a valid region, all paths are invalid regions, since they are connected
+		// However, we keep track of that here, and don't return() immediately as we wish to traverse all the paths
 		if(!findValidRegion(visitedPtr, regionRowColPairsPtr, nextRow, nextCol, board)) {
 			validRegion = false;
 		}
@@ -65,7 +67,22 @@ bool findValidRegion(std::vector<std::vector<bool>>* visitedPtr, std::vector<std
 }
 /*
  * Complexity
-time O(N * M), space O(N * M) for "seen", or if seen is an attribute of a cell then an additional field.
+Similar to flood-fill, uses DFS starting at a cell with 'O'. Time O(N * M), space O(N * M) for tracking visited nodes.
+	- Iterate over matrix, left to right, top to bottom. Track cells visited.
+	- If you find a 'O', start DFS from that point onwards. The DFS will find all connected 'O's. However, if any of the
+	  'O's is on the edge, the entire region is deemed "invalid"
+	- Flip cells in all "valid" regions
+
+Another approach -
+since the "invalid" regions are those that have one or more 'Os' at the edge of the board, we could start our search on the edges. Similar to flood-fill algo, but fill the 'O's with '#'. So
+- Search edges of the board for 'Os'. If found,  flood-fill with '#'. Flood-fill will mark all adjacent 'Os' with '#'
+ - Flip all 'O's to 'X'. These are the "valid" regions.
+ - Flip all '#'s back to 'Os'
+
+ This approach simplifies the DFS a bit as we know that we're finding adjacent "invalid" cells and don't need to track visited cells. However, it iterates over the matrix multiple times.
+
+GFG also has similar: https://www.geeksforgeeks.org/given-matrix-o-x-replace-o-x-surrounded-x/
+
  *
  * */
 void captureRegion(BoardType& board) {
@@ -97,6 +114,8 @@ void captureRegion(BoardType& board) {
 	}
 
 	// Flip cells identified within valid regions
+	// This should be done at the end, as flipping cells while iterating may have different results
+	// vs. flipping at the end after identifying all valid regions, without changing the input board.
 	for(const auto& regionRowColPairs : allValidRegions) {
 		std::for_each(std::cbegin(regionRowColPairs), std::cend(regionRowColPairs),
 				[&board](const std::pair<int, int>& p){board[p.first][p.second] = 'X';});
@@ -106,18 +125,36 @@ void captureRegion(BoardType& board) {
 
 int main() {
 	try {
+
 		std::vector<std::vector<char>> board {
+/*
+			{'X', 'X', 'X', 'X'},
 			{'X', 'O', 'X', 'X'},
-			{'X', 'O', 'X', 'X'},
+			{'X', 'X', 'X', 'X'},
 			{'X', 'X', 'O', 'X'},
+			{'X', 'X', 'O', 'X'},
+*/
+
+/*
+			{'O', 'O'},
+			{'O', 'O'},
+*/
+
+/*
+			 {'X', 'O', 'X', 'X', 'X', 'X'},
+			 {'X', 'O', 'X', 'X', 'O', 'X'},
+			 {'X', 'X', 'X', 'O', 'O', 'X'},
+			 {'O', 'X', 'X', 'X', 'X', 'X'},
+			 {'X', 'X', 'X', 'O', 'X', 'O'},
+			 {'O', 'O', 'X', 'O', 'O', 'O'},
+*/
+			{'X', 'X', 'X', 'X'},
 			{'X', 'O', 'X', 'X'},
+			{'X', 'O', 'O', 'X'},
+			{'X', 'O', 'X', 'X'},
+			{'X', 'X', 'O', 'O'}
 		};
 
-//		std::vector<std::vector<char>> board {
-//			{'O', 'X'},
-//			{'X', 'O'},
-//
-//		};
 		captureRegion(board);
 		printContainer(board);
 	} catch(const std::exception& e) {
