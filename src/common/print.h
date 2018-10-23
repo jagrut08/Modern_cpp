@@ -76,6 +76,11 @@ inline void printFunc(std::ostream& out, const T& t) {
 	out << t;
 }
 
+template <typename T, typename U>
+inline void printFunc(std::ostream& out, const std::pair<T, U>& p) {
+	out << p.first << " - " << p.second;
+}
+
 /*
  * Simple implementation that suits my needs, only for STL containers - a comprehensive version can be found here
  * http://louisdx.github.io/cxx-prettyprint/
