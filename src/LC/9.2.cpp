@@ -96,7 +96,10 @@ std::vector<std::vector<std::string>> findShortestTransforms(const std::string& 
 //			printContainer(nextWords);
 			for(const auto& nextWord : nextWords) {
 				if(nextWord == endWord) {
-					auto& path = getPathToStartWord(word, childParentMap);
+					// auto& path works only on MSVC - error on other compilers as
+					// the rvalue from the function call is assigned to a non-const ref path
+ // "non-const lvalue reference to type ... cannot bind to a temporary of type ..."
+					auto path = getPathToStartWord(word, childParentMap);
 					path.emplace_back(nextWord);
 					res.emplace_back(path);
 				} else { // Only if the nextWord != endWord, add nextWord to childParentMap and nextQueue

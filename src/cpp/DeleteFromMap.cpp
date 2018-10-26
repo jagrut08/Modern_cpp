@@ -32,7 +32,7 @@ void deleteOddNumberedElements(std::map<int, int>*  mPtr) {
 	 * All other iterators, pointers and references keep their validity."
 	 * */
 }
-
+/*
 int main() {
 	try {
 		std::map<int, int> m;
@@ -56,3 +56,4 @@ int main() {
 		return -1;
 	}
 }
+*/
