@@ -34,7 +34,7 @@ void deleteOddNumberedElements(std::map<int, int>*  mPtr) {
 	 * See https://stackoverflow.com/questions/4600567/how-can-i-delete-elements-of-a-stdmap-with-an-iterator
 	 * */
 }
-
+/*
 int main() {
 	try {
 		std::map<int, int> m;
@@ -58,3 +58,4 @@ int main() {
 		return -1;
 	}
 }
+*/
