@@ -30,6 +30,8 @@ void deleteOddNumberedElements(std::map<int, int>*  mPtr) {
 	 * http://www.cplusplus.com/reference/map/map/erase/
 	 * "Iterators, pointers and references referring to elements removed by the function are invalidated.
 	 * All other iterators, pointers and references keep their validity."
+	 *
+	 * See https://stackoverflow.com/questions/4600567/how-can-i-delete-elements-of-a-stdmap-with-an-iterator
 	 * */
 }
 
