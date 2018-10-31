@@ -93,7 +93,7 @@ inline void printContainer(const T& t, const std::string delim = ", "){
 	}
 	// If it's a container of containers, recurse to the leaf-level containers first
 	if constexpr(is_stl_container<typename T::value_type>::value) {
-		std::for_each(std::cbegin(t), std::cend(t), [&t, &delim](const auto& val) {printContainer(val, delim);}); // auto works in C++14 onwards
+		std::for_each(std::cbegin(t), std::cend(t), [&delim](const auto& val) {printContainer(val, delim);}); // auto works in C++14 onwards
 	} else {
 		// Print a leaf-level container
 		std::ostringstream ostr;
