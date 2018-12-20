@@ -1,8 +1,45 @@
-9.4, 10.1
+10.1
+You may find that your algo is incorrect while tracing through BF example at the algo stage (perhaps you didn't understand some aspect of the question), don't hesitate to start from scratch. Different algo means you may need to ask for different clarifying questions and change examples
 --
+Palindrome Partitioning
+Given a string s, partition s such that every substring of the partition is a palindrome.
+Return all possible palindrome partitioning of s.
+For example, given s = ”aab”, Return
+[
+["aa","b"],
+["a","a","b"]
+]
+--
+std::vector<std::vector<std::string>> getPalindromePartitions(const std::string& str)
+--
+space ?
 
+"aba" => {"a", "b", "a"}, {"aba"} 
+"abc" => {"a", "b", "c"} 
+"aaa" => {a
 
+"" -> {}
+" a" -> {" ", "a"}
+"agfgb" => {sigle chars}, {a, gfg, b}
+--
+Algo
 
+isPalindrome(str)
+	traverse from left and right towards center as long as leftIdx <= rightIdx  
+		if chars don't match, return false
+	return true
+	
+f(str, curRes, finalRes, startIdx)
 
+	if startIdx >= str.size()
+		add curRes to finalRes
+	
+	consider all widths from 1 through str.size()
+		if str.subsr(startIdx, 1) is a palindrome
+			 add that substr to curRes
+			 startIdx += width
+			 f(str, curRes, finalRes, startIdx + width)
+--
+Time and space complexity? N^2 time, N space due to recursive + 
 
  	
