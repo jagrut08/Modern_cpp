@@ -40,6 +40,6 @@ f(str, curRes, finalRes, startIdx)
 			 startIdx += width
 			 f(str, curRes, finalRes, startIdx + width)
 --
-Time and space complexity? N^2 time, N space due to recursive + 
+Time and space complexity? N^2 time, N space due to recursive + what is the complexity of returned data?  
 
  	
