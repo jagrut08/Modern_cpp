@@ -1,10 +1,12 @@
 10.1
 You may find that your algo is incorrect while tracing through BF example at the algo stage (perhaps you didn't understand some aspect of the question), don't hesitate to start from scratch. Different algo means you may need to ask for different clarifying questions and change examples
+
+as long as <condition>
 --
 Palindrome Partitioning
 Given a string s, partition s such that every substring of the partition is a palindrome.
 Return all possible palindrome partitioning of s.
-For example, given s = ”aab”, Return
+For example, given s = ï¿½aabï¿½, Return
 [
 ["aa","b"],
 ["a","a","b"]
@@ -16,7 +18,7 @@ space ?
 
 "aba" => {"a", "b", "a"}, {"aba"} 
 "abc" => {"a", "b", "c"} 
-"aaa" => {a
+"aaa" => {single chars}, {"a", "aa"}, {"aa", "a"}, {"aaa"}, 
 
 "" -> {}
 " a" -> {" ", "a"}
@@ -29,17 +31,73 @@ isPalindrome(str)
 		if chars don't match, return false
 	return true
 	
-f(str, curRes, finalRes, startIdx)
-
-	if startIdx >= str.size()
+f(str, curRes, finalRes)
+	if str is empty
 		add curRes to finalRes
 	
 	consider all widths from 1 through str.size()
-		if str.subsr(startIdx, 1) is a palindrome
+		if str.substr(0, width) is a palindrome
 			 add that substr to curRes
-			 startIdx += width
-			 f(str, curRes, finalRes, startIdx + width)
+			 f(str.substr(startIdx), curRes, finalRes)
+			 remove that substr from curRes
 --
-Time and space complexity? N^2 time, N space due to recursive + what is the complexity of returned data?  
+Time and space complexity? 
+N^2 time, 
 
+N space due to N recursive calls in the worst case (single char case) 
+Each partition is of size N * N partitions in the worst case so N^2
+Total N + N^2 = N^2  
+--
+Code
+
+#include <iostream>
+#include <stdexcept>
+#include <string>
+#include <vector>
  	
+bool isPalindrome(const std::string& str) {
+	if(str.empty()){
+		return true;
+	}
+	int startIdx = 0, endIdx = str.size() - 1;
+	
+	while(startIdx <= endIdx) {
+		if(str[startIdx] != str[endIdx]) {
+			return false;
+		}
+		++startIdx;
+		--endIdx;
+	}
+	return true;
+}
+
+void getPalPartitionHelper(std::vector<std::string>* curResPtr, std::vector<std::vector<std::string>>* resPtr, const std::string& str) {
+ 
+ 	if(str.empty()) {
+ 		resPtr->emplace_back(curRes); 	
+ 		return;
+ 	}
+ 
+ 	for(size_t width = 1; width <= str.size(); ++width) {
+ 		const std::string& subStr = str.substr(0, width);
+ 		if(isPalindrome(subStr)) {
+ 			curResPtr->emplace_back(subStr);
+ 			getPalPartitionHelper(curResPtr, resPtr, str.substr(width));
+ 			curResPtr->pop_back();
+ 		}
+ 	}
+ }
+ 
+
+std::vector<std::vector<std::string>> getPalindromePartitions(const std::string& str) {
+ 	std::vector<std::vector<std::string>> res{};
+ 	std::vector<std::string> curRes{};
+ 	
+ 	if(str.empty()) {
+ 		return res;
+ 	}
+ 	
+ 	getPalPartitionHelper(&curRes, &res, str);
+ 
+ }
+ 
