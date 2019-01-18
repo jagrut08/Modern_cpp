@@ -1,15 +1,14 @@
 10.1
-You may find that your algo is incorrect while tracing through BF example at the algo stage (perhaps you didn't understand some aspect of the question), don't hesitate to start from scratch. Different algo means you may need to ask for different clarifying questions and change examples
+You may find that your algo is incorrect while tracing through BF example at the algo stage (perhaps you didn't understand some aspect of the question), don't hesitate to start from scratch. It amounts to course correction, and it's still early on in the game, so that's good. 
+ Different algo means you may need to ask for different clarifying questions and change examples.
 
-as long as <condition>
---
 Palindrome Partitioning
 Given a string s, partition s such that every substring of the partition is a palindrome.
 Return all possible palindrome partitioning of s.
-For example, given s = �aab�, Return
+For example, given s = "aab", Return
 [
-["aa","b"],
-["a","a","b"]
+	["aa","b"],
+	["a","a","b"]
 ]
 --
 std::vector<std::vector<std::string>> getPalindromePartitions(const std::string& str)
@@ -19,7 +18,7 @@ space ?
 "aba" => {"a", "b", "a"}, {"aba"} 
 "abc" => {"a", "b", "c"} 
 "aaa" => {single chars}, {"a", "aa"}, {"aa", "a"}, {"aaa"}, 
-
+"aaaa" => {single chars}, {"a", "a", "aa"}, {"a", "aa", "a"}, {"a", "aaa" }, {"aa", "a", "a"}, {"aa", "aa"}, {"aaa", "a"}, {"aaaa"}
 "" -> {}
 " a" -> {" ", "a"}
 "agfgb" => {sigle chars}, {a, gfg, b}
@@ -31,7 +30,7 @@ isPalindrome(str)
 		if chars don't match, return false
 	return true
 	
-f(str, curRes, finalRes)
+f(curRes, finalRes, str)
 	if str is empty
 		add curRes to finalRes
 	
@@ -42,11 +41,11 @@ f(str, curRes, finalRes)
 			 remove that substr from curRes
 --
 Time and space complexity? 
-N^2 time, 
+Each partition is of size N * ? partitions in the worst case so ?
 
 N space due to N recursive calls in the worst case (single char case) 
-Each partition is of size N * N partitions in the worst case so N^2
-Total N + N^2 = N^2  
+Each partition is of size N * ? partitions in the worst case so ?
+
 --
 Code
 
@@ -72,7 +71,6 @@ bool isPalindrome(const std::string& str) {
 }
 
 void getPalPartitionHelper(std::vector<std::string>* curResPtr, std::vector<std::vector<std::string>>* resPtr, const std::string& str) {
- 
  	if(str.empty()) {
  		resPtr->emplace_back(curRes); 	
  		return;
@@ -98,6 +96,6 @@ std::vector<std::vector<std::string>> getPalindromePartitions(const std::string&
  	}
  	
  	getPalPartitionHelper(&curRes, &res, str);
- 
+ 	return res;
  }
  
