@@ -59,7 +59,7 @@ int rootToLeafSum(const tnPtr<unsigned short int>& root) {
 	rootToLeafSumHelper(&finalSum, 0, root);
 	return finalSum;
 }
-
+/*
 int main() {
 	try {
 			const std::vector<std::vector<TreeNode<unsigned short int>>> levelOrderNodes {
@@ -84,3 +84,4 @@ int main() {
 			return -999;
 		}
 }
+*/
