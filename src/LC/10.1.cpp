@@ -51,6 +51,15 @@ void getPalPartitionHelper(std::vector<std::string>* curResPtr, std::vector<std:
  }
 
 
+/*
+ * Backtracking.
+ *
+ * In the worst case, a decomposition comprises single characters. There are O(2^N-1) decompositions in all. Palindrome check is O(N)
+ * Time complexity = O(2^N-1) * N
+ * Space complexity = N stack frames in the worst case for one character case + space complexity of output = O(2^N-1) * N
+ *
+ *
+ * */
 std::vector<std::vector<std::string>> getPalindromePartitions(const std::string& str) {
  	std::vector<std::vector<std::string>> res{};
  	std::vector<std::string> curRes{};
