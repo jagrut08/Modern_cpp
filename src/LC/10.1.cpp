@@ -72,6 +72,7 @@ std::vector<std::vector<std::string>> getPalindromePartitions(const std::string&
  	return res;
  }
 
+/*
 int main() {
 	try {
 		const std::vector<std::string> inputs = {
@@ -95,3 +96,4 @@ int main() {
 		return -999;
 	}
 }
+*/
