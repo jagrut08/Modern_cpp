@@ -1,44 +1,16 @@
-10.2
-int findPaths(const int m, const int n)
---
-2x2 => {d, r} and {r, d} => 2
---
-empty grid? 
-1 cell? (start == finish)
-3, 5
-2, 4
-0, x
-x, 0
--ve or 0
---
-Algo
-findPaths(m, n)
-	validation
-	paths = 0
-	helper(m, n, 0, 0, paths)
-	return paths
-
-void helper(m, n, curRow, curCol, paths)
-if curRow and curCol are last square
-	increment paths
-	return 
-else
-	from this row and column, try to move down and right
-	nextRow = curRow + 1
-	if nextRow is valid
-		helper(m, n, nextRow, curCol)
-	nextCol = curCol + 1
-	if nextCol is valid
-		helper(m, n, nextCol, curRow)
---
-Time m *n as entire grid processed once at least
-Space complexity - worst case, stack frames = longest path between 00 and bottom square = m + n - 1
---
+/*
+A robot is located at the top-left corner of a m  n grid (marked ’Start’ in the diagram below).
+The robot can only move either down or right at any point in time. The robot is trying to reach the
+bottom-right corner of the grid (marked ’Finish’ in the diagram below).
+How many possible unique paths are there?
+*/
 #include <iostream>
 #include <stdexcept>
 #include <vector>
 
 // Backtracking
+// Time complexity O(m*n) at least.. confirm
+// Space complexity O(n + m), the longest possible path, which corresponds to that may recursive stack frames
 void findPathsHelper(int *pathsPtr, const int m, const int n, const int curRow, const int curCol) {
 	if(pathsPtr == nullptr) {
 		throw std::exception("Unexpected nullptr");
