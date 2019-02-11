@@ -1,5 +1,5 @@
 /*
-A robot is located at the top-left corner of a m  n grid (marked ’Start’ in the diagram below).
+A robot is located at the top-left corner of a m * n grid (marked ’Start’ in the diagram below).
 The robot can only move either down or right at any point in time. The robot is trying to reach the
 bottom-right corner of the grid (marked ’Finish’ in the diagram below).
 How many possible unique paths are there?
@@ -10,10 +10,10 @@ How many possible unique paths are there?
 
 // Backtracking
 // Time complexity O(m*n) at least.. confirm
-// Space complexity O(n + m), the longest possible path, which corresponds to that may recursive stack frames
+// Space complexity O(n + m), the longest possible path, which corresponds to that many recursive stack frames
 void findPathsHelper(int *pathsPtr, const int m, const int n, const int curRow, const int curCol) {
 	if(pathsPtr == nullptr) {
-		throw std::exception("Unexpected nullptr");
+		throw std::runtime_error("Unexpected nullptr");
 	}
 
 	if(curRow == m - 1 && curCol == n - 1) {
@@ -41,7 +41,11 @@ int findPaths(const int m, const int n) {
 int main() {
 	const std::vector<std::pair<int, int>> inputs {
 		std::make_pair(2, 2),
-	}
+		std::make_pair(2, 3),
+		std::make_pair(3, 4),
+		
+	};
+	
 	for(const auto& input : inputs) {
 		std::cout << input.first << ", " << input.second << " :  " <<  findPaths(input.first, input.second) << '\n';
 	}
