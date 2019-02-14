@@ -8,8 +8,8 @@ How many possible unique paths are there?
 #include <stdexcept>
 #include <vector>
 
-// Backtracking
-// Time complexity O(m*n) at least.. confirm
+// Recursive solution
+// Time complexity exponential
 // Space complexity O(n + m), the longest possible path, which corresponds to that many recursive stack frames
 void findPathsHelper(int *pathsPtr, const int m, const int n, const int curRow, const int curCol) {
 	if(pathsPtr == nullptr) {
