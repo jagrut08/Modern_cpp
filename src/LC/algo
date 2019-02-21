@@ -1,19 +1,37 @@
-Next 10.2, 11.1
+Next 10.2, 11.3
 ctci reading red black tree
 --
-Implement pow(x, n)
---
-double myPow(double x, int n)
+11.2
 
-2, 2 => 4
-1.5, 2 => 2.25
-2, 0 => 1
-2, 1 => 2
--2, 1 => -2 (account for sign, depends on even odd n)
-2, -1 => 0.5
-0, 1 => 0
-0, -1 => 0
-high number, high number => overflow
+Implement int sqrt(int x).
+Compute and return the square root of x.
+--
+examples
+4 => 2
+2 => 1
+0 => 0
+1 => 1
+-1 => throw
+5 => 2
+289 => 17
+special cases
 --
 Algo
+--
+sqrt(x)
 
+input validation...
+
+special case for 0, 1
+
+res = 1
+iterate for n starting with 1 through n/2
+    if n * n equals x
+        return n
+
+    if n * n greater x
+        return res
+    else
+        res = n * n
+
+return res
