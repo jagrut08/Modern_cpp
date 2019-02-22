@@ -5,6 +5,7 @@ Compute and return the square root of x.
  *
  */
 
+#include <algorithm>
 #include <cmath>
 #include <iostream>
 #include <stdexcept>
@@ -21,15 +22,18 @@ int mySqrt(int x) {
 
 	int low = 1, high = x/2;
 
-	while(high - low > 1) {
-		const int mid = low + (high-low)/2;
+	while(high > low) {
+		if(high - low == 1) {
+			return (high * high <= x ? high : low);
+		}
+		const int mid = low + (high - low)/2;
 		const int curAns = mid * mid;
 		if(curAns == x) {
 			return curAns;
 		} else if(curAns > x) {
-			high = curAns;
+			high = mid;
 		} else {
-			low = curAns;
+			low = mid;
 		}
 	}
 
@@ -38,22 +42,12 @@ int mySqrt(int x) {
 
 int main() {
 	const std::vector<int> inputs {
-		4
+
 		/*
-		 * examples
-4 => 2
-2 => 1
-0 => 0
-1 => 1
+		 * other examples
 -1 => throw
-5 => 2
 289 => 17
-special cases
---
-
-
-		 *
-		 * */
+special cases */
 	};
 
 	for(const auto input : inputs) {
