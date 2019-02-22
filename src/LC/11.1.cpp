@@ -3,6 +3,7 @@
  * Implement pow(x, n)
  * */
 #include <cassert>
+#include <cmath>
 #include <iostream>
 #include <stdexcept>
 #include <utility>
@@ -39,7 +40,7 @@ double myPow(const double x, const int n) {
 	return myPowRecur(y, z);
 }
 
-
+/*
 int main() {
 	try {
 		const std::vector<std::pair<double, int>> inputs {
@@ -71,3 +72,4 @@ int main() {
 		return -999;
 	}
 }
+*/

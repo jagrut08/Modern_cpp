@@ -51,6 +51,7 @@ https://www.youtube.com/watch?v=M8BYckxI8_U
 
 Treat it like a permutation: https://leetcode.com/problems/unique-paths/discuss/22958/Math-solution-O(1)-space
 */
+/*
 int main() {
 	const std::vector<std::pair<int, int>> inputs {
 		std::make_pair(2, 2),
@@ -63,3 +64,4 @@ int main() {
 		std::cout << input.first << ", " << input.second << " :  " <<  findPaths(input.first, input.second) << '\n';
 	}
 }	
+*/
