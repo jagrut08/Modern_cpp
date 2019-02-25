@@ -41,6 +41,9 @@ int mySqrt(int x) {
 	return low;
 }
 
+// LC Discuss top answer also employs binary search
+// https://leetcode.com/problems/sqrtx/discuss/25047/A-Binary-Search-Solution
+
 int main() {
 	
 	std::vector<int> inputs(1000);
