@@ -5,7 +5,7 @@ Compute and return the square root of x.
  *
  */
 
-#include <algorithm>
+#include <numeric>
 #include <cmath>
 #include <iostream>
 #include <stdexcept>
@@ -27,9 +27,10 @@ int mySqrt(int x) {
 			return (high * high <= x ? high : low);
 		}
 		const int mid = low + (high - low)/2;
+	//	std::cout << "\nMid " << mid << '\n';
 		const int curAns = mid * mid;
 		if(curAns == x) {
-			return curAns;
+			return mid;
 		} else if(curAns > x) {
 			high = mid;
 		} else {
@@ -41,17 +42,16 @@ int mySqrt(int x) {
 }
 
 int main() {
-	const std::vector<int> inputs {
-
-		/*
-		 * other examples
--1 => throw
-289 => 17
-special cases */
-	};
-
+	
+	std::vector<int> inputs(1000);
+	std::iota(std::begin(inputs), std::end(inputs), 0);
+	
 	for(const auto input : inputs) {
-		std::cout << sqrt(input) << " : " << mySqrt(input) << '\n';
+	    const int expected = static_cast<int>(sqrt(input));
+	    const int actual = mySqrt(input);
+	    
+	    if(expected != actual){
+	        std::cout << input << " - " << expected  << " : " << actual << '\n';
+	    }	
 	}
 }
-
