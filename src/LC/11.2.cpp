@@ -76,7 +76,7 @@ int floorSqrt(int x)
 	return ans;
 }
 
-
+/*
 int main() {
 	
 	std::vector<int> inputs(1000);
@@ -91,3 +91,4 @@ int main() {
 	    }	
 	}
 }
+*/

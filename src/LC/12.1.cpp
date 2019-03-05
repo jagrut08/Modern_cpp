@@ -2,25 +2,27 @@
 #include <stdexcept>
 #include <vector>
 
-bool isLastIndexHelper(std::vector<int>* vPtr, const int idx, const std::vector<int>& v) {
+enum class IndexStatus : int {not_visited, good, bad};
+
+bool isLastIndexHelper(std::vector<IndexStatus>* vPtr, const int idx, const std::vector<int>& v) {
 	if(!vPtr) {
 		throw std::runtime_error("vPtr is null!");
 	}
 	if(idx >= v.size() - 1) {
 		return true;
 	}
-	if((*vPtr)[idx] != -1) {
-		return (*vPtr)[idx] == 1 ? true : false;
+	if((*vPtr)[idx] != IndexStatus::not_visited) {
+		return (*vPtr)[idx] == IndexStatus::good ? true : false;
 	}
 
 	for(int jump = v[idx]; jump > 0; --jump) {
 		const int newIdx = idx + jump;
 		if(isLastIndexHelper(vPtr, newIdx, v)) {
-			(*vPtr)[newIdx] = 1; // TODO Use enum or std::unordered_set to track
+			(*vPtr)[newIdx] = IndexStatus::good; // TODO Can also use std::unordered_set to track
 			return true;
 		}
 	}
-	(*vPtr)[idx] = 0;
+	(*vPtr)[idx] = IndexStatus::bad;
 	return false;
 }
 /*
@@ -32,7 +34,7 @@ bool isLastIndexReacheable(const std::vector<int>& v) {
 	if(v.empty()) {
 		throw std::runtime_error("Empty input");	
 	}
-	std::vector<int> visited(v.size(), -1);
+	std::vector<IndexStatus> visited(v.size(), IndexStatus::not_visited);
 	return isLastIndexHelper(&visited, 0, v);
 }
 
