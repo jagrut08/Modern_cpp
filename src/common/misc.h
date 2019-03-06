@@ -6,6 +6,7 @@
 #ifndef SRC_COMMON_MISC_H_
 #define SRC_COMMON_MISC_H_
 
+#include <algorithm>
 #include <iostream>
 #include <sstream>
 #include <unordered_map>

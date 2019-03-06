@@ -6,6 +6,7 @@
 #ifndef SRC_COMMON_PRINT_H_
 #define SRC_COMMON_PRINT_H_
 
+#include <algorithm>
 #include <deque>
 #include <forward_list>
 #include <iostream>
