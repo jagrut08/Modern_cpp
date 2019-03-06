@@ -1,9 +1,5 @@
 *.d
 *.o
 Modern_cpp
-/.settings/
-/.cproject
-/.project
 /Release/
-
 /Debug/
