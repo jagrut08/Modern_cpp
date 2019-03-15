@@ -26,7 +26,7 @@ std::vector<int> getNextIdxs(std::vector<VisitedStatus>* visitedPtr, const int i
 	}
 	return res;
 }
-
+// BFS, time complexity ?
 int findMinJumps(const std::vector<int>& v) {
 	if(v.empty()) {
 		throw std::runtime_error("Empty input!");
@@ -51,6 +51,7 @@ int findMinJumps(const std::vector<int>& v) {
 	return -1;
 }
 
+// Don't actually need to track visited in BFS - see https://leetcode.com/problems/jump-game-ii/discuss/18028/O(n)-BFS-solution
 int main() {
     std::vector<std::vector<int>> inputs {
       {2, 3, 1, 1, 4},  
