@@ -28,7 +28,7 @@ std::vector<int> getNextIdxs(std::vector<VisitedStatus>* visitedPtr, const int i
 	}
 	return res;
 }
-// BFS, time complexity ?
+// BFS, time complexity N^2 both time and space
 int findMinJumps(const std::vector<int>& v) {
 	if(v.empty()) {
 		throw std::runtime_error("Empty input!");
