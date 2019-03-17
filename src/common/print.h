@@ -87,7 +87,7 @@ inline void printFunc(std::ostream& out, const std::pair<T, U>& p) {
  * http://louisdx.github.io/cxx-prettyprint/
  * */
 template<typename T>
-inline void printContainer(const T& t, const std::string delim = ", "){
+inline void printContainer(const T& t, const char *delim = ", "){
 	if(t.empty()) {
 		std::cout << "{}\n";
 		return;

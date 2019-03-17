@@ -22,7 +22,7 @@ bool isPalindrome(const std::string& str) {
 	if(str.empty()){
 		return true;
 	}
-	int startIdx = 0, endIdx = str.size() - 1;
+	unsigned long startIdx = 0, endIdx = str.size() - 1;
 
 	while(startIdx <= endIdx) {
 		if(str[startIdx] != str[endIdx]) {

@@ -13,7 +13,7 @@ public:
 		std::cout << "Base default ctor\n";
 	}
 
-	Base(const char c) : val(c) {
+	explicit Base(const char c) : val(c) {
 		std::cout << "Base one-arg ctor " << "for " << val << '\n';
 	}
 
@@ -24,9 +24,9 @@ public:
 
 	// Explicitly defined move constructor means copy assignment implicitly deleted
 	// So copy assignment operator should be defined explicitly
-	Base(const Base&& b) {
+	Base(const Base&& b) noexcept {
 		std::cout << "Base mctor " << "for " << val << '\n';
-		val = std::move(b.val);
+		val = b.val;
 	}
 
    ~Base() {

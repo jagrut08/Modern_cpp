@@ -37,7 +37,7 @@ bool pathExistsHelper(const tnPtr<int>& root, const int expSum, const int curSum
 	}
 
 	if(!root->left && !root->right) {
-		return (curSum + root->val == expSum ? true : false);
+		return curSum + root->val == expSum;
 	}
 
 	return pathExistsHelper(root->left, expSum, curSum + root->val) ||

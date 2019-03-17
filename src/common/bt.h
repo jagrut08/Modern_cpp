@@ -224,7 +224,7 @@ inline void printBT(const tnPtr<T>& root) {
 		}
 	}
 
-	int numLeafNodes = std::pow(2, allNodesStrs.size() - 1);
+	auto numLeafNodes = static_cast<int>(std::pow(2, allNodesStrs.size() - 1));
 	int width = (2 * numLeafNodes - 1) * maxWidth; // numLeafNodes + (numLeafNodes - 1) gaps in between the nodes
 	int offset = 0, gap = maxWidth;
 	std::list<std::string> res;
@@ -241,11 +241,11 @@ xxxx----xxxx----xxxx----xxxx
 	 * */
 	// Iterate over nodes bottom-up
 	for(auto revIter = std::crbegin(allNodesStrs); revIter != std::crend(allNodesStrs); ++revIter) {
-		std::string row(width, ' '), arrows(width, ' ');
+		std::string row(static_cast<unsigned long>(width), ' '), arrows(width, ' ');
 		int rowIdx = offset;
 		bool leftChild = true;
 		for(const auto& nodeStr : *revIter) {
-			if(nodeStr.size()) {
+			if(!nodeStr.empty()) {
 				arrows[rowIdx] = (leftChild? '/' : '\\');
 			}
 

@@ -50,11 +50,12 @@ int mySqrt(int x) {
 int floorSqrt(int x)
 {
 	// Base cases
-	if (x == 0 || x == 1)
-	return x;
+	if (x == 0 || x == 1) {
+		return x;
+	}
 
 	// Do Binary Search for floor(sqrt(x))
-	int start = 1, end = x, ans;
+	int start = 1, end = x, ans = 0;
 	while (start <= end)
 	{
 		int mid = (start + end) / 2;

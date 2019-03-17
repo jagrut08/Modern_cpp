@@ -35,7 +35,7 @@ struct Result {
 
 	Result(const int l, const int c, const bool e) : localPath(l), connectingPath(c), localPathExists(e) {}
 
-	Result(const Result& r) : localPath(r.localPath), connectingPath(r.connectingPath), localPathExists(r.localPathExists) {}
+	Result(const Result& r)  = default;
 };
 
 std::ostream& operator <<(std::ostream& out, const Result& r) {

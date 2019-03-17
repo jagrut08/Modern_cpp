@@ -59,7 +59,7 @@ std::vector<std::vector<int>> getCombinations(const int n, const int k) {
 std::vector<std::vector<int>> combine(int n, int k) {
 		std::vector<std::vector<int>> result;
 		int i = 0;
-		std::vector<int> p(k, 0);
+		std::vector<int> p(static_cast<unsigned long>(k), 0);
 		while (i >= 0) {
 			p[i]++;
 			std::cout << "Incremented p[" << i << "] to " << p[i] << '\n';

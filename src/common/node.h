@@ -19,10 +19,10 @@ struct Node {
 	T val;
 	bool isNull = false; // Whether a null node was created intentionally
 
-	Node(const T& v, bool isNullInput = false) : val(v), isNull(isNullInput) {}
+	explicit Node(const T& v, bool isNullInput = false) : val(v), isNull(isNullInput) {};
 
 	// Needed to create null nodes - e.g., Node<int>(nullptr)
-	Node(const T* vPtr) {
+	explicit Node(const T* vPtr) {
 		if(!vPtr) {
 			isNull = true;
 		} else {
@@ -30,7 +30,7 @@ struct Node {
 		}
 	}
 
-	~Node() {}
+	~Node() = default;
 
 	Node(const Node& n) : val(n.val), isNull(n.isNull) {}
 
@@ -47,9 +47,9 @@ template <typename T>
 struct TreeNode : public Node<T> {
 	std::shared_ptr<TreeNode<T>> left, right;
 
-	TreeNode(const T& v) : Node<T>(v) {}
+	explicit TreeNode(const T& v) : Node<T>(v) {}
 
-	TreeNode(const T* v) : Node<T>(v) {} // Needed to create null nodes
+	explicit TreeNode(const T* v) : Node<T>(v) {} // Needed to create null nodes
 
 	TreeNode(const TreeNode& n): Node<T>(n.val, n.isNull), left(n.left), right(n.right) {}
 

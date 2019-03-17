@@ -4,6 +4,8 @@ Given an array of non-negative integers, you are initially positioned at the fir
 For example: Given array A = [2,3,1,1,4]
 The minimum number of jumps to reach the last index is 2. (Jump 1 step from index 0 to 1, then 3 steps to the last index.)
 */
+#include <print.h>
+
 #include <iostream>
 #include <stdexcept>
 #include <vector>
@@ -61,11 +63,13 @@ int main() {
       {1},
       {2, 2, 1, 4},
       {1, 1, 1, 1},
-      {1, 2, 3, 2, 5, 3, 0, 2}
+      {1, 2, 3, 2, 5, 3, 0, 2},
+	  {1, 3, 5, 8, 9, 2, 6, 7, 6, 8, 9}
       
     };
     
     for(const auto& input : inputs) {
-        std::cout << findMinJumps(input) << '\n';
+    	printContainer(input);
+        std::cout << "Min jumps: " << findMinJumps(input) << '\n';
     }
 }

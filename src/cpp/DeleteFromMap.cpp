@@ -17,7 +17,7 @@ void deleteOddNumberedElements(std::map<int, int>*  mPtr) {
 
 	using mapIter = std::map<int, int>::iterator;
 
-	for(mapIter it = std::begin(*mPtr); it != std::end(*mPtr); ++it) {
+	for(auto it = std::begin(*mPtr); it != std::end(*mPtr); ++it) {
 		it = mPtr->erase(it); // it will point to the element after the element that was deleted
 
 		if(it == mPtr->end()) { // For odd-sized maps, we hit end() after deletion

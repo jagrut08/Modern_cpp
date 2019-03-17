@@ -86,11 +86,11 @@ GFG also has similar: https://www.geeksforgeeks.org/given-matrix-o-x-replace-o-x
  *
  * */
 void captureRegion(BoardType& board) {
-	if(!board.size()) {
+	if(board.empty()) {
 		return;
 	}
 
-	const int maxRows = board.size();
+	unsigned long maxRows = board.size();
 	const int maxCols = board[0].size();
 
 	std::vector<std::vector<bool>> visited(maxRows, std::vector<bool>(maxCols, false));

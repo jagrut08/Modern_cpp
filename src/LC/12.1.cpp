@@ -12,7 +12,7 @@ bool isLastIndexHelper(std::vector<IndexStatus>* vPtr, const int idx, const std:
 		return true;
 	}
 	if((*vPtr)[idx] != IndexStatus::not_visited) {
-		return (*vPtr)[idx] == IndexStatus::good ? true : false;
+		return (*vPtr)[idx] == IndexStatus::good;
 	}
 
 	for(int jump = v[idx]; jump > 0; --jump) {
@@ -56,6 +56,7 @@ bool isLastIndexReacheableOpt(const std::vector<int>& v) {
     }
     return idxToReach == 0;    
 }
+/*
 int main() {
     const std::vector<std::vector<int>> inputs {
         {2, 3, 1, 1, 4},
@@ -73,4 +74,4 @@ int main() {
         std::cout << std::boolalpha << isLastIndexReacheable(input) << " - " << isLastIndexReacheableOpt(input) << '\n';
     }
 }
-
+*/
