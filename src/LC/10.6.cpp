@@ -44,7 +44,16 @@ void getIPAddressesHelper(std::vector<std::string>* resPtr, const std::string& c
     	}
     }
 }
-// DFS
+/*DFS
+Complexity is O(1) time and space - https://www.youtube.com/watch?v=KU7Ae2513h0 towards the end
+Reasoning is that the number of IP addresses is finite, so that's the upper bound, a constant
+
+Another argument: the solution is to insert 3 dots in a string of 4 - 12 chars
+First dot can be inserted in 11 ways, second in 10, third in 9. All three dots identical. 
+So (11x10x9)/ 3!, so N! in the range 4 <= N <= 12. But upper bound is when N = 12, so constant. 
+E.g., "1234" => "1.2.3.4", only 1 IP address
+*/
+
 std::vector<std::string> getIPAddresses(const std::string& str) {
     std::vector<std::string> res;
     if(str.size() < 4 || str.size() > 12) {
