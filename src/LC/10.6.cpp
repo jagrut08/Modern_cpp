@@ -44,7 +44,7 @@ void getIPAddressesHelper(std::vector<std::string>* resPtr, const std::string& c
     	}
     }
 }
-
+// DFS
 std::vector<std::string> getIPAddresses(const std::string& str) {
     std::vector<std::string> res;
     if(str.size() < 4 || str.size() > 12) {
@@ -55,6 +55,8 @@ std::vector<std::string> getIPAddresses(const std::string& str) {
     getIPAddressesHelper(&res, curIP, str, 0, 0);
     return res;
 }
+
+// Iterative solution https://leetcode.com/problems/restore-ip-addresses/discuss/30949/My-code-in-Java
 
 int main() {
     const std::vector<std::string> inputs = {
