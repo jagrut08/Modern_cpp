@@ -55,6 +55,7 @@ int findMinJumps(const std::vector<int>& v) {
 
 // Don't actually need to track visited in BFS - see https://leetcode.com/problems/jump-game-ii/discuss/18028/O(n)-BFS-solution
 // Greedy strategy, similar to BFS, O(N): https://leetcode.com/problems/jump-game-ii/discuss/18014/Concise-O(n)-one-loop-JAVA-solution-based-on-Greedy
+/*
 int main() {
     std::vector<std::vector<int>> inputs {
       {2, 3, 1, 1, 4},  
@@ -73,3 +74,4 @@ int main() {
         std::cout << "Min jumps: " << findMinJumps(input) << '\n';
     }
 }
+*/
