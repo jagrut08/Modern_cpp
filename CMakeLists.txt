@@ -32,4 +32,4 @@ add_executable(Modern_cpp
         src/LC/9.3.cpp
         src/LC/12.1.cpp
         src/LC/12.2.cpp
-        src/LC/12.3.cpp)
+        src/LC/12.3.cpp src/LC/10.7.cpp)

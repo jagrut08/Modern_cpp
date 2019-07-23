@@ -39,10 +39,10 @@ int maxProfit(const std::vector<int>& v) {
 Above code fails for {7, 1, 5, 3, 6, 4} - we don't need to maintain maxSeen, rather it should be maxProfit calculated 
 for each point in the array. LC Article: https://leetcode.com/articles/best-time-to-buy-and-sell-stock/ */
 
-
+/*
 int main() {
     const std::vector<std::vector<int>> inputs = {
-      /*  {10, 3, 20, 2, 11}, // => 17
+        {10, 3, 20, 2, 11}, // => 17
         {2, 10, 20}, // => 18
         {20, 10, 2}, // => 0
         {10, 20, 2}, // => 10
@@ -55,11 +55,11 @@ int main() {
         {10, 2, 10}, // => 8
         {10, 10, 2}, // => 0
         {7, 1, 5, 3, 6, 4}, // => 5
-        */
+
     };
     for(const auto& input : inputs) {
         printContainer(input);
         std::cout << maxProfit(input) << '\n';
     }
 }
-
+*/
